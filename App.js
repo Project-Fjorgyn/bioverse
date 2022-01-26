@@ -6,6 +6,8 @@ import { useFonts as usePTSerif, PTSerif_400Regular } from '@expo-google-fonts/p
 import { StyleSheet, Text, View } from 'react-native';
 
 import { theme } from './src/theme';
+import { AuthContextProvider } from './src/context/auth.context';
+import { Navigation } from './src/navigation';
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -27,9 +29,9 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <View>
-          <Text>Bioverse</Text>
-        </View>
+        <AuthContextProvider>
+          <Navigation />
+        </AuthContextProvider>
       </ThemeProvider>
       <StatusBar style="auto" />
     </>
