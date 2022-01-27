@@ -16,6 +16,6 @@ export const ActionButton = styled(Button).attrs({
 export const ResetContainer = styled(View)`
   flex-direction: row;
   position: absolute;
-  right: 10px;
-  top: 25px;
+  right: 5%;
+  top: 10%;
 `;
