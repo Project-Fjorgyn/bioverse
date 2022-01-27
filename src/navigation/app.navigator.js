@@ -16,6 +16,7 @@ export function AppNavigator() {
     <NavigationContainer>
       <IdentifyContextProvider>
         <Tab.Navigator
+          initialRouteName="Identify"
           screenOptions={({ route }) => ({
             tabBarStyle: { backgroundColor: theme.colors.ui[0] },
             headerShown: false,

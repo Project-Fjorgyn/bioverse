@@ -167,18 +167,20 @@ export function IdentifyContextProvider({ children }) {
 
   const answerQuestion = (answered_question, question_info, answer) => {
     question_info['answer'] = answer;
-    setAnsweredQuestions([...answeredQuestions, { question: answered_question, question_info }]);
+    setAnsweredQuestions([{ question: answered_question, question_info }, ...answeredQuestions]);
     setActiveQuestions(activeQuestions.filter(({ question }) => question !== answered_question));
-    if (question_info['kind'] === 'categorical') {
-      setSelectedSpecies(
-        selectedSpecies.filter((s) => get(s['features'], answered_question, 0) == answer)
-      );
-    } else {
-      setSelectedSpecies(
-        selectedSpecies.filter((s) =>
-          rangeFilterFunc(s, answered_question, question_info['split'], answer)
-        )
-      );
+    if (answer != -1) {
+      if (question_info['kind'] === 'categorical') {
+        setSelectedSpecies(
+          selectedSpecies.filter((s) => get(s['features'], answered_question, 0) == answer)
+        );
+      } else {
+        setSelectedSpecies(
+          selectedSpecies.filter((s) =>
+            rangeFilterFunc(s, answered_question, question_info['split'], answer)
+          )
+        );
+      }
     }
   };
 

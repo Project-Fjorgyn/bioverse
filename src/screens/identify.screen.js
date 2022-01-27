@@ -22,7 +22,11 @@ export function IdentifyScreen() {
           <AnsweredQuestion
             key={question}
             prompt={question_info['prompt']}
-            answer={question_info['options'][question_info['answer']]}
+            answer={
+              question_info['answer'] == -1
+                ? 'unsure'
+                : question_info['options'][question_info['answer']]
+            }
           />
         ))}
       </QuestionsContainer>
@@ -35,7 +39,7 @@ export function IdentifyScreen() {
       ) : (
         <SpeciesContainer>
           {selectedSpecies.map(({ name, common_names }) => (
-            <Species name={name} common_name={common_names[0]} />
+            <Species key={name} name={name} common_name={common_names[0]} />
           ))}
         </SpeciesContainer>
       )}

@@ -54,6 +54,9 @@ export function Question({ prompt, options, sendAnswer }) {
             {options[k]}
           </ActionButton>
         ))}
+        <ActionButton key={-1} onPress={() => sendAnswer(-1)}>
+          unsure
+        </ActionButton>
       </OptionsContainer>
     </QuestionContainer>
   );

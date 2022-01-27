@@ -18,6 +18,6 @@ export function Species({ name, common_name }) {
 
 export const SpeciesContainer = styled(ScrollView)`
   flex: 1;
-  flex-grow: 0.25;
-  background-color: ${(props) => props.theme.colors.ui[2]};
+  flex-grow: 0.5;
+  background-color: ${(props) => props.theme.colors.ui[3]};
 `;
