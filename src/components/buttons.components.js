@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { theme } from '../theme';
 
@@ -10,4 +11,11 @@ export const ActionButton = styled(Button).attrs({
   margin-left: ${(props) => props.theme.spacing.md};
   margin-top: ${(props) => props.theme.spacing.sm};
   margin-bottom: ${(props) => props.theme.spacing.sm};
+`;
+
+export const ResetContainer = styled(View)`
+  flex-direction: row;
+  position: absolute;
+  right: 10px;
+  top: 25px;
 `;

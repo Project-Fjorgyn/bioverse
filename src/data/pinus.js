@@ -1,81 +1,115 @@
-export const PINUS_QUESTIONS = {
-  bundle_size: {
-    kind: 'range',
-    unit: 'count',
-    subject: 'needle bundle',
-  },
-  needle_length: {
-    kind: 'range',
-    unit: 'cm',
-    subject: 'needle length',
-  },
-  cone_length: {
-    kind: 'range',
-    unit: 'cm',
-    subject: 'cone length',
-  },
-  diameter: {
-    kind: 'range',
-    unit: 'm',
-    subject: 'trunk diameter',
-  },
-  height: {
-    kind: 'range',
-    unit: 'm',
-    subject: 'tree height',
-  },
-  thick_scale: {
-    kind: 'categorical',
-    prompt: 'thick scales?',
-    options: {
-      0: 'no',
-      1: 'yes',
+export const PINUS_QUESTIONS = [
+  {
+    question: 'bundle_size',
+    question_info: {
+      kind: 'range',
+      unit: 'count',
+      subject: 'needle bundle',
     },
   },
-  spine_scale: {
-    kind: 'categorical',
-    prompt: 'scale end in spines?',
-    options: {
-      0: 'no',
-      1: 'yes',
+  {
+    question: 'needle_length',
+    question_info: {
+      kind: 'range',
+      unit: 'cm',
+      subject: 'needle length',
     },
   },
-  four_sided_scale: {
-    kind: 'categorical',
-    prompt: 'four sided scales?',
-    options: {
-      0: 'no',
-      1: 'yes',
+  {
+    question: 'cone_length',
+    question_info: {
+      kind: 'range',
+      unit: 'cm',
+      subject: 'cone length',
     },
   },
-  bristled_scale: {
-    kind: 'categorical',
-    prompt: 'bristled scales?',
-    options: {
-      0: 'no',
-      1: 'yes',
+  {
+    question: 'diameter',
+    question_info: {
+      kind: 'range',
+      unit: 'm',
+      subject: 'trunk diameter',
     },
   },
-  keeled_scale: {
-    kind: 'categorical',
-    prompt: 'keeled scales?',
-    options: {
-      0: 'no',
-      1: 'yes',
+  {
+    question: 'height',
+    question_info: {
+      kind: 'range',
+      unit: 'm',
+      subject: 'tree height',
     },
   },
-  resinous_scale: {
-    kind: 'categorical',
-    prompt: 'resinous scales?',
-    options: {
-      0: 'no',
-      1: 'yes',
+  {
+    question: 'thick_scale',
+    question_info: {
+      kind: 'categorical',
+      prompt: 'thick scales?',
+      options: {
+        0: 'no',
+        1: 'yes',
+      },
     },
   },
-};
+  {
+    question: 'spine_scale',
+    question_info: {
+      kind: 'categorical',
+      prompt: 'scale end in spines?',
+      options: {
+        0: 'no',
+        1: 'yes',
+      },
+    },
+  },
+  {
+    question: 'four_sided_scale',
+    question_info: {
+      kind: 'categorical',
+      prompt: 'four sided scales?',
+      options: {
+        0: 'no',
+        1: 'yes',
+      },
+    },
+  },
+  {
+    question: 'bristled_scale',
+    question_info: {
+      kind: 'categorical',
+      prompt: 'bristled scales?',
+      options: {
+        0: 'no',
+        1: 'yes',
+      },
+    },
+  },
+  {
+    question: 'keeled_scale',
+    question_info: {
+      kind: 'categorical',
+      prompt: 'keeled scales?',
+      options: {
+        0: 'no',
+        1: 'yes',
+      },
+    },
+  },
+  {
+    question: 'resinous_scale',
+    question_info: {
+      kind: 'categorical',
+      prompt: 'resinous scales?',
+      options: {
+        0: 'no',
+        1: 'yes',
+      },
+    },
+  },
+];
 
-export const PINUS_DATA = {
-  'Pinus albicaulis': {
+export const PINUS_DATA = [
+  {
+    name: 'Pinus albicaulis',
     common_names: ['whitebark pine'],
     features: {
       bundle_size: [5, 5],
@@ -87,7 +121,8 @@ export const PINUS_DATA = {
       spine_scale: 1,
     },
   },
-  'Pinus aristata': {
+  {
+    name: 'Pinus aristata',
     common_names: ['bristlecone pine'],
     features: {
       bundle_size: [5, 5],
@@ -99,7 +134,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus attenuata': {
+  {
+    name: 'Pinus attenuata',
     common_names: ['knobcone pine'],
     features: {
       bundle_size: [3, 3],
@@ -112,7 +148,8 @@ export const PINUS_DATA = {
       spine_scale: 1,
     },
   },
-  'Pinus banksiana': {
+  {
+    name: 'Pinus banksiana',
     common_names: ['jack pine'],
     features: {
       bundle_size: [2, 2],
@@ -124,7 +161,8 @@ export const PINUS_DATA = {
       raised_scale: 1,
     },
   },
-  'Pinus cembroides': {
+  {
+    name: 'Pinus cembroides',
     common_names: ['mexican pinyon'],
     features: {
       bundle_size: [3, 3],
@@ -136,7 +174,8 @@ export const PINUS_DATA = {
       four_sided_scale: 1,
     },
   },
-  'Pinus clausa': {
+  {
+    name: 'Pinus clausa',
     common_names: ['sand pine'],
     features: {
       bundle_size: [2, 2],
@@ -148,7 +187,8 @@ export const PINUS_DATA = {
       keeled_scale: 1,
     },
   },
-  'Pinus contorta': {
+  {
+    name: 'Pinus contorta',
     common_names: ['lodgepole pine'],
     features: {
       bundle_size: [2, 2],
@@ -161,7 +201,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus coulteri': {
+  {
+    name: 'Pinus coulteri',
     common_names: ['coulter pine'],
     features: {
       bundle_size: [2, 2],
@@ -174,7 +215,8 @@ export const PINUS_DATA = {
       spine_scale: 1,
     },
   },
-  'Pinus echinata': {
+  {
+    name: 'Pinus echinata',
     common_names: ['shortleaf pine'],
     features: {
       bundle_size: [2, 3],
@@ -186,7 +228,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus edulis': {
+  {
+    name: 'Pinus edulis',
     common_names: ['colorado pinyon pine'],
     features: {
       bundle_size: [2, 2],
@@ -198,7 +241,8 @@ export const PINUS_DATA = {
       resinous_scale: 1,
     },
   },
-  'Pinus elliottii': {
+  {
+    name: 'Pinus elliottii',
     common_names: ['slash pine'],
     features: {
       bundle_size: [2, 3],
@@ -210,7 +254,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus engelmanni': {
+  {
+    name: 'Pinus engelmanni',
     common_names: ['apache pine'],
     features: {
       bundle_size: [3, 5],
@@ -225,7 +270,8 @@ export const PINUS_DATA = {
       spine_scale: 1,
     },
   },
-  'Pinus flexilis': {
+  {
+    name: 'Pinus flexilis',
     common_names: ['limber pine'],
     features: {
       bundle_size: [5, 5],
@@ -236,7 +282,8 @@ export const PINUS_DATA = {
       thick_scale: 1,
     },
   },
-  'Pinus glabra': {
+  {
+    name: 'Pinus glabra',
     common_names: ['spruce pine'],
     features: {
       bundle_size: [2, 2],
@@ -246,7 +293,8 @@ export const PINUS_DATA = {
       height: [24, 27],
     },
   },
-  'Pinus jeffreyi': {
+  {
+    name: 'Pinus jeffreyi',
     common_names: ['jeffrey pine'],
     features: {
       bundle_size: [3, 3],
@@ -259,7 +307,8 @@ export const PINUS_DATA = {
       spine_scale: 1,
     },
   },
-  'Pinus lambertiana': {
+  {
+    name: 'Pinus lambertiana',
     common_names: ['sugar pine'],
     features: {
       bundle_size: [5, 5],
@@ -270,7 +319,8 @@ export const PINUS_DATA = {
       thick_scale: 1,
     },
   },
-  'Pinus leiophyhlla': {
+  {
+    name: 'Pinus leiophyhlla',
     common_names: ['chihuahua pine'],
     features: {
       bundle_size: [3, 3],
@@ -281,7 +331,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus monophylla': {
+  {
+    name: 'Pinus monophylla',
     common_names: ['singleleaf pinyon'],
     features: {
       bundle_size: [1, 2],
@@ -294,7 +345,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus monitcola': {
+  {
+    name: 'Pinus monitcola',
     common_names: ['western white pine'],
     features: {
       bundle_size: [5, 5],
@@ -304,7 +356,8 @@ export const PINUS_DATA = {
       height: [30, 30],
     },
   },
-  'Pinus muricata': {
+  {
+    name: 'Pinus muricata',
     common_names: ['bishop pine'],
     features: {
       bundle_size: [2, 2],
@@ -317,7 +370,8 @@ export const PINUS_DATA = {
       spine_scale: 1,
     },
   },
-  'Pinus nigra': {
+  {
+    name: 'Pinus nigra',
     common_names: ['black pine', 'austrian pine'],
     features: {
       bundle_size: [2, 2],
@@ -328,7 +382,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus palustris': {
+  {
+    name: 'Pinus palustris',
     common_names: ['longleaf pine'],
     features: {
       bundle_size: [3, 3],
@@ -341,7 +396,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus ponderosa': {
+  {
+    name: 'Pinus ponderosa',
     common_names: ['ponderosa pine'],
     features: {
       bundle_size: [2, 5],
@@ -354,7 +410,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus pungens': {
+  {
+    name: 'Pinus pungens',
     common_names: ['table mountain pine'],
     features: {
       bundle_size: [2, 3],
@@ -367,7 +424,8 @@ export const PINUS_DATA = {
       spine_scale: 1,
     },
   },
-  'Pinus quadrifolia': {
+  {
+    name: 'Pinus quadrifolia',
     common_names: ['parry pinyon'],
     features: {
       bundle_size: [3, 5],
@@ -382,7 +440,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus radiata': {
+  {
+    name: 'Pinus radiata',
     common_names: ['monterey pine'],
     features: {
       bundle_size: [3, 3],
@@ -394,7 +453,8 @@ export const PINUS_DATA = {
       raised_scale: 1,
     },
   },
-  'Pinus resinosa': {
+  {
+    name: 'Pinus resinosa',
     common_names: ['red pine'],
     features: {
       bundle_size: [2, 2],
@@ -406,7 +466,8 @@ export const PINUS_DATA = {
       keeled_scale: 1,
     },
   },
-  'Pinus rigida': {
+  {
+    name: 'Pinus rigida',
     common_names: ['pitch pine'],
     features: {
       bundle_size: [3, 3],
@@ -419,7 +480,8 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-  'Pinus sabiniana': {
+  {
+    name: 'Pinus sabiniana',
     common_names: ['gray pine'],
     features: {
       bundle_size: [3, 3],
@@ -432,7 +494,8 @@ export const PINUS_DATA = {
       keeled_scale: 1,
     },
   },
-  'Pinus serotina': {
+  {
+    name: 'Pinus serotina',
     common_names: ['pond pine'],
     features: {
       bundle_size: [3, 3],
@@ -444,7 +507,8 @@ export const PINUS_DATA = {
       keeled_scale: 1,
     },
   },
-  'Pinus strobiformis': {
+  {
+    name: 'Pinus strobiformis',
     common_names: ['southwestern white pine'],
     features: {
       bundle_size: [5, 5],
@@ -454,7 +518,8 @@ export const PINUS_DATA = {
       height: [15, 24],
     },
   },
-  'Pinus strobus': {
+  {
+    name: 'Pinus strobus',
     common_names: ['eastern white pine'],
     features: {
       bundle_size: [5, 5],
@@ -464,7 +529,8 @@ export const PINUS_DATA = {
       height: [33, 33],
     },
   },
-  'Pinus sylvestris': {
+  {
+    name: 'Pinus sylvestris',
     common_names: ['scots pine'],
     features: {
       bundle_size: [2, 2],
@@ -474,7 +540,8 @@ export const PINUS_DATA = {
       height: [21, 21],
     },
   },
-  'Pinus taeda': {
+  {
+    name: 'Pinus taeda',
     common_names: ['loblolly pine'],
     features: {
       bundle_size: [3, 3],
@@ -487,7 +554,8 @@ export const PINUS_DATA = {
       spine_scale: 1,
     },
   },
-  'Pinus torreyana': {
+  {
+    name: 'Pinus torreyana',
     common_names: ['torrey pine'],
     features: {
       bundle_size: [5, 5],
@@ -501,7 +569,8 @@ export const PINUS_DATA = {
       spine_scale: 1,
     },
   },
-  'Pinus virginiana': {
+  {
+    name: 'Pinus virginiana',
     common_names: ['virginia pine'],
     features: {
       bundle_size: [2, 2],
@@ -512,4 +581,4 @@ export const PINUS_DATA = {
       bristled_scale: 1,
     },
   },
-};
+];

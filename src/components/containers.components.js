@@ -1,0 +1,8 @@
+import { SafeAreaView } from 'react-native';
+import styled from 'styled-components/native';
+
+export const SafeArea = styled(SafeAreaView)`
+  flex: 1;
+  flex-grow: 1;
+  background-color: ${(props) => props.theme.colors.ui[2]};
+`;
