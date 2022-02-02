@@ -48,13 +48,15 @@ export function ChooseQuestionSet(values, options) {
 export function FilterOptionsSet(answer, choice, options) {
   var kept = [];
   for (let i in options) {
-    if (answer && options[i].some((c) => c === choice)) {
+    if (answer === 'yes' && options[i].some((c) => c === choice)) {
       kept.push(i);
     } else if (
-      !answer &&
+      answer === 'no' &&
       ((options[i].some((c) => c === choice) && options[i].length > 1) ||
         !options[i].some((c) => c === choice))
     ) {
+      kept.push(i);
+    } else if (answer === 'unsure') {
       kept.push(i);
     }
   }

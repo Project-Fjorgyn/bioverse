@@ -32,9 +32,11 @@ export function ChooseQuestionCategorical(values, options) {
 export function FilterOptionsCategorical(answer, choice, options) {
   var kept = [];
   for (let i in options) {
-    if (answer && options[i] === choice) {
+    if (answer === 'yes' && options[i] === choice) {
       kept.push(i);
-    } else if (!answer && options[i] !== choice) {
+    } else if (answer === 'no' && options[i] !== choice) {
+      kept.push(i);
+    } else if (answer === 'unsure') {
       kept.push(i);
     }
   }

@@ -59,9 +59,11 @@ function ChooseQuestionRange(options) {
 export function FilterOptionsRange(answer, choice, options) {
   var kept = [];
   for (let i in options) {
-    if (answer && options[i][1] > choice) {
+    if (answer === 'yes' && options[i][1] > choice) {
       kept.push(i);
-    } else if (!answer && options[i][0] > choice) {
+    } else if (answer === 'no' && options[i][0] > choice) {
+      kept.push(i);
+    } else if (answer === 'unsure') {
       kept.push(i);
     }
   }

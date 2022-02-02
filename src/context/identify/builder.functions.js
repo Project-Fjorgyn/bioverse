@@ -56,15 +56,17 @@ export const buildQuestion = {
   categorical: BuildQuestionCategorical,
 };
 
-export function BuildOptions(questionName, questionSchema, accumulatedKeyset, taxa) {
+export function BuildOptions(questionKeyset, questionSchema, taxa) {
+  var final_key = questionKeyset[questionKeyset.length - 1];
+  var approaching_keys = questionKeyset.slice(0, questionKeyset.length - 2);
   var options = [];
   for (let i in taxa) {
     var info = taxa[i];
-    for (let j in accumulatedKeyset) {
+    for (let j in approaching_keys) {
       info = info[accumulatedKeyset[j]];
     }
-    if (questionName in info) {
-      options.push(info[questionName]);
+    if (final_key in info) {
+      options.push(info[final_key]);
     } else {
       options.push(questionSchema['default']);
     }
