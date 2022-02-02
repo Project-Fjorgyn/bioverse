@@ -1,3 +1,7 @@
+export function NumericOrder(a, b) {
+  return a - b;
+}
+
 export function GetExpectation(exclusions, total) {
   /*
       exclusions: array of count of exclusions per choice

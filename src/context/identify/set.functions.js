@@ -2,9 +2,9 @@ import { GetExpectation } from './base';
 
 function OptionsRemovedUnderSetChoice(choice, options) {
   /*
-      choice: the question value chosen
-      options: an array of question values for each taxa 
-    */
+    choice: the question value chosen
+    options: an array of question values for each taxa 
+  */
   var removed_under_yes = [];
   var removed_under_no = [];
   for (let i in options) {
@@ -20,11 +20,11 @@ function OptionsRemovedUnderSetChoice(choice, options) {
   };
 }
 
-function ChooseQuestionSet(values, options) {
+export function ChooseQuestionSet(values, options) {
   /*
-      values: the nested schema for this question
-      options: an array of question values for each taxa 
-    */
+    values: possible options
+    options: an array of question values for each taxa 
+  */
   var expectation = 0;
   var choice = null;
   for (let i in values) {
@@ -43,4 +43,20 @@ function ChooseQuestionSet(values, options) {
     choice,
     expectation,
   };
+}
+
+export function FilterOptionsSet(answer, choice, options) {
+  var kept = [];
+  for (let i in options) {
+    if (answer && options[i].some((c) => c === choice)) {
+      kept.push(i);
+    } else if (
+      !answer &&
+      ((options[i].some((c) => c === choice) && options[i].length > 1) ||
+        !options[i].some((c) => c === choice))
+    ) {
+      kept.push(i);
+    }
+  }
+  return kept;
 }
