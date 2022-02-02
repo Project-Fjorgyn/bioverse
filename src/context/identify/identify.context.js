@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 import { buildQuestion, BuildOptions } from './builder.functions';
 import { filterOptions } from './filter.functions';
@@ -18,11 +18,9 @@ function SelectQuestion(schema, answered, taxa, accumulatedKeyset = null) {
   var selectedQuestion = {
     expectation: 0,
     choice: null,
-    questionView: null,
-    answerView: null,
+    schema: null,
+    keyset: null,
   };
-  var selectedQuestionKeyset = null;
-  var selectedQuestionSchema = null;
   var options = null;
 
   for (let key in schema) {
@@ -32,33 +30,27 @@ function SelectQuestion(schema, answered, taxa, accumulatedKeyset = null) {
     }
     var question = { expectation: 0 };
     var question_keyset = null;
-    var question_schema = null;
     var kind = schema[key]['kind'];
     if (kind === 'set' || kind === 'categorical' || kind === 'range') {
       question_keyset = [...accumulatedKeyset, key];
       options = BuildOptions(question_keyset, schema[key], taxa);
-      question = buildQuestion[kind](schema[key]);
-      question_schema = schema[key];
+      question = buildQuestion[kind](schema[key], options);
+      question['questionSchema'] = schema[key];
+      question['keyset'] = question_keyset;
     } else if (schema[key]['kind'] === 'object') {
       var newAccumulatedKeyset = [...accumulatedKeyset, key];
       var result = SelectQuestion(schema[key]['members'], answered, taxa, newAccumulatedKeyset);
-      question = result.selectedQuestion;
-      question_keyset = result.selectedQuestionKeyset;
-      question_schema = result.selectedQuestionSchema;
+      question = result;
     }
     if (question.expectation > selectedQuestion.expectation) {
       selectedQuestion = question;
-      selectedQuestionKeyset = question_keyset;
-      selectedQuestionSchema = question_schema;
     }
   }
-  selectedQuestion[schema] = selectedQuestionSchema;
-  selectedQuestion[keyset] = selectedQuestionKeyset;
   return selectedQuestion;
 }
 
 function FilterTaxa(selectedQuestion, answer, taxa) {
-  var schema = selectedQuestion['schema'];
+  var schema = selectedQuestion['questionSchema'];
   var keyset = selectedQuestion['keyset'];
   var choice = selectedQuestion['choice'];
   var options = BuildOptions(keyset, schema, taxa);
@@ -70,26 +62,38 @@ function FilterTaxa(selectedQuestion, answer, taxa) {
   return kept_taxa;
 }
 
+export const IdentifyContext = createContext();
+
 export function IdentifyContextProvider({ children }) {
-  const [path, setPath] = useState(['pinopsida', 'pinales', 'pinaceae', 'pinus']);
+  const [path, setPath] = useState(['pinus']);
   const [schema, setSchema] = useState(LoadSchema(path));
   const [selectedSpecies, setSelectedSpecies] = useState(LoadTaxa(path));
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
   const [activeQuestion, setActiveQuestion] = useState(
-    SelectQuestion(schema, answeredQuestions, selectedSpecies)
+    SelectQuestion(
+      schema,
+      answeredQuestions.map((a) => a.keyset.join('.')),
+      selectedSpecies
+    )
   );
 
   const reset = () => {
-    setActiveQuestions(PINUS_QUESTIONS);
+    setSelectedSpecies(LoadTaxa(path));
     setAnsweredQuestions([]);
-    setSelectedSpecies(PINUS_DATA);
-    setActiveQuestion(SelectQuestion(schema, answeredQuestions, selectedSpecies));
+    var new_question = SelectQuestion(schema, [], selectedSpecies);
+    setActiveQuestion(new_question);
   };
 
   const answerQuestion = (answer) => {
+    activeQuestion['answer'] = answer;
     setSelectedSpecies(FilterTaxa(activeQuestion, answer, selectedSpecies));
     setAnsweredQuestions([...answeredQuestions, activeQuestion]);
-    setActiveQuestion(SelectQuestion(schema, answeredQuestions, selectedSpecies));
+    var new_question = SelectQuestion(
+      schema,
+      [...answeredQuestions, activeQuestion].map((a) => a.keyset.join('.')),
+      selectedSpecies
+    );
+    setActiveQuestion(new_question);
   };
 
   return (

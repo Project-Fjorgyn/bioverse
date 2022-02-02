@@ -1,6 +1,6 @@
 import { GetExpectation, NumericOrder } from './base';
 
-function ChooseQuestionRange(options) {
+export function ChooseQuestionRange(options) {
   /*
     options: an array of ranges for each taxa 
   */
@@ -15,9 +15,11 @@ function ChooseQuestionRange(options) {
     var end = options[i][1];
     if (!(start in events_info)) {
       events_info[start] = [0, 0];
+      events.push(start);
     }
     if (!(end in events_info)) {
       events_info[end] = [0, 0];
+      events.push(end);
     }
     events_info[start][0] += 1;
     events_info[end][1] += 1;
