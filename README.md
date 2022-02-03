@@ -1,5 +1,7 @@
 # bioverse
 
+Check out the app! https://expo.dev/@mgietzmann/bioverse
+
 Attempts to:
 
 - Ask only clear, straightforward questions
