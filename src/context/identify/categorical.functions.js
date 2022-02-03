@@ -17,7 +17,10 @@ export function ChooseQuestionCategorical(values, options) {
       (prior, current) => (current !== new_choice ? prior + 1 : prior),
       0
     );
-    var new_expectation = GetExpectation([removed_under_yes, removed_under_no], options.length);
+    var new_expectation = GetExpectation(
+      [removed_under_yes, removed_under_no],
+      [removed_under_no, removed_under_yes]
+    );
     if (new_expectation > expectation) {
       choice = new_choice;
       expectation = new_expectation;

@@ -23,7 +23,7 @@ export function IdentifyScreen() {
           />
         ))}
       </QuestionsContainer>
-      {true ? (
+      {activeQuestion.expectation ? (
         <Question
           questionSchema={activeQuestion.questionSchema}
           choice={activeQuestion.choice}
@@ -31,8 +31,8 @@ export function IdentifyScreen() {
         />
       ) : (
         <SpeciesContainer>
-          {selectedSpecies.map(({ name, common_names }) => (
-            <Species key={name} name={name} common_name={common_names[0]} />
+          {selectedSpecies.map(({ name, common_name }) => (
+            <Species key={name} name={name} common_name={common_name} />
           ))}
         </SpeciesContainer>
       )}

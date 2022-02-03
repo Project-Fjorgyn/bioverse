@@ -1,5 +1,15 @@
 import { GetExpectation, NumericOrder } from './base';
 
+function WeightsUnderRangeChoice(removed_under_yes, removed_under_no, total) {
+  var could_be_both = total - removed_under_yes - removed_under_no;
+  var weight_under_yes = removed_under_no + could_be_both / 2;
+  var weight_under_no = removed_under_yes + could_be_both / 2;
+  return {
+    weight_under_yes,
+    weight_under_no,
+  };
+}
+
 export function ChooseQuestionRange(options) {
   /*
     options: an array of ranges for each taxa 
@@ -34,7 +44,16 @@ export function ChooseQuestionRange(options) {
   // except the things starting at this point
   var removed_under_no = options.length - events_info[choice][0];
   var removed_under_yes = 0;
-  var expectation = GetExpectation([removed_under_no, removed_under_yes], options.length);
+  var could_be_both = options.length - removed_under_no - removed_under_yes;
+  var { weight_under_yes, weight_under_no } = WeightsUnderRangeChoice(
+    removed_under_yes,
+    removed_under_no,
+    options.length
+  );
+  var expectation = GetExpectation(
+    [removed_under_no, removed_under_yes],
+    [weight_under_no, weight_under_yes]
+  );
   // now we loop through the remaining events
   for (let i = 1; i < sorted_events.length; i++) {
     var new_choice = sorted_events[i];
@@ -46,7 +65,15 @@ export function ChooseQuestionRange(options) {
     // there are new things we can exclude under a yes
     // condition
     removed_under_yes += events_info[new_choice][1];
-    var new_expectation = GetExpectation([removed_under_no, removed_under_yes], options.length);
+    var { weight_under_yes, weight_under_no } = WeightsUnderRangeChoice(
+      removed_under_yes,
+      removed_under_no,
+      options.length
+    );
+    var new_expectation = GetExpectation(
+      [removed_under_no, removed_under_yes],
+      [weight_under_no, weight_under_yes]
+    );
     if (new_expectation > expectation) {
       choice = new_choice;
       expectation = new_expectation;
@@ -63,7 +90,7 @@ export function FilterOptionsRange(answer, choice, options) {
   for (let i in options) {
     if (answer === 'yes' && options[i][1] > choice) {
       kept.push(i);
-    } else if (answer === 'no' && options[i][0] > choice) {
+    } else if (answer === 'no' && options[i][0] < choice) {
       kept.push(i);
     } else if (answer === 'unsure') {
       kept.push(i);
