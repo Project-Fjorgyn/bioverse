@@ -28,10 +28,23 @@ export const QuestionsContainer = styled(ScrollView)`
   background-color: ${(props) => props.theme.colors.ui[2]};
 `;
 
-export function AnsweredQuestion({ prompt, answer }) {
+export function QuestionViewSet({ questionSchema, choice, submitAnswer }) {
+  return (
+    <QuestionContainer>
+      <QuestionPrompt>{`${questionSchema['prompt']} ${choice}?`}</QuestionPrompt>
+      <OptionsContainer>
+        <ActionButton onPress={() => submitAnswer('yes')}>yes</ActionButton>
+        <ActionButton onPress={() => submitAnswer('no')}>no</ActionButton>
+        <ActionButton onPress={() => submitAnswer('unsure')}>unsure</ActionButton>
+      </OptionsContainer>
+    </QuestionContainer>
+  );
+}
+
+export function AnswerViewSet({ questionSchema, choice, answer }) {
   return (
     <List.Item
-      title={prompt}
+      title={`${questionSchema['prompt']} ${choice}`}
       titleStyle={{ fontFamily: theme.fonts.heading }}
       description={answer}
       descriptionStyle={{ fontFamily: theme.fonts.body }}
@@ -39,25 +52,94 @@ export function AnsweredQuestion({ prompt, answer }) {
   );
 }
 
-export function Question({ prompt, options, sendAnswer }) {
-  var option_keys = [];
-  for (let option in options) {
-    option_keys.push(option);
-  }
-
+export function QuestionViewRange({ questionSchema, choice, submitAnswer }) {
   return (
     <QuestionContainer>
-      <QuestionPrompt>{prompt}</QuestionPrompt>
+      <QuestionPrompt>
+        {`${questionSchema['prompt']} ${choice}${questionSchema['unit']}?`}
+      </QuestionPrompt>
       <OptionsContainer>
-        {option_keys.map((k) => (
-          <ActionButton key={k} onPress={() => sendAnswer(k)}>
-            {options[k]}
-          </ActionButton>
-        ))}
-        <ActionButton key={-1} onPress={() => sendAnswer(-1)}>
-          unsure
-        </ActionButton>
+        <ActionButton onPress={() => submitAnswer('yes')}>yes</ActionButton>
+        <ActionButton onPress={() => submitAnswer('no')}>no</ActionButton>
+        <ActionButton onPress={() => submitAnswer('unsure')}>unsure</ActionButton>
       </OptionsContainer>
     </QuestionContainer>
   );
+}
+
+export function AnswerViewRange({ questionSchema, choice, answer }) {
+  return (
+    <List.Item
+      title={`${questionSchema['prompt']} ${choice}${questionSchema['unit']}`}
+      titleStyle={{ fontFamily: theme.fonts.heading }}
+      description={answer}
+      descriptionStyle={{ fontFamily: theme.fonts.body }}
+    />
+  );
+}
+
+export function QuestionViewCategorical({ questionSchema, choice, submitAnswer }) {
+  return (
+    <QuestionContainer>
+      <QuestionPrompt>{`${questionSchema['prompt']} ${choice}?`}</QuestionPrompt>
+      <OptionsContainer>
+        <ActionButton onPress={() => submitAnswer('yes')}>yes</ActionButton>
+        <ActionButton onPress={() => submitAnswer('no')}>no</ActionButton>
+        <ActionButton onPress={() => submitAnswer('unsure')}>unsure</ActionButton>
+      </OptionsContainer>
+    </QuestionContainer>
+  );
+}
+
+export function AnswerViewCategorical({ questionSchema, choice, answer }) {
+  return (
+    <List.Item
+      title={`${questionSchema['prompt']} ${choice}`}
+      titleStyle={{ fontFamily: theme.fonts.heading }}
+      description={answer}
+      descriptionStyle={{ fontFamily: theme.fonts.body }}
+    />
+  );
+}
+
+export function AnsweredQuestion({ questionSchema, choice, answer }) {
+  var kind = questionSchema['kind'];
+  if (kind === 'set') {
+    return <AnswerViewSet questionSchema={questionSchema} choice={choice} answer={answer} />;
+  } else if (kind === 'range') {
+    return <AnswerViewRange questionSchema={questionSchema} choice={choice} answer={answer} />;
+  } else if (kind === 'categorical') {
+    return (
+      <AnswerViewCategorical questionSchema={questionSchema} choice={choice} answer={answer} />
+    );
+  }
+}
+
+export function Question({ questionSchema, choice, submitAnswer }) {
+  var kind = questionSchema['kind'];
+  if (kind === 'set') {
+    return (
+      <QuestionViewSet
+        questionSchema={questionSchema}
+        choice={choice}
+        submitAnswer={submitAnswer}
+      />
+    );
+  } else if (kind === 'range') {
+    return (
+      <QuestionViewRange
+        questionSchema={questionSchema}
+        choice={choice}
+        submitAnswer={submitAnswer}
+      />
+    );
+  } else if (kind === 'categorical') {
+    return (
+      <QuestionViewCategorical
+        questionSchema={questionSchema}
+        choice={choice}
+        submitAnswer={submitAnswer}
+      />
+    );
+  }
 }

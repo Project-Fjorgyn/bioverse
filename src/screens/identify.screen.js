@@ -3,43 +3,36 @@ import { Text } from 'react-native';
 
 import { SafeArea } from '../components/containers.components';
 import { QuestionsContainer, AnsweredQuestion, Question } from '../components/questions.components';
-import { IdentifyContext } from '../context/identify.context';
+import { IdentifyContext } from '../context/identify/identify.context';
 import { Species, SpeciesContainer } from '../components/species.components';
 import { ResetContainer, ActionButton } from '../components/buttons.components';
 
 export function IdentifyScreen() {
-  const { answeredQuestions, selectedSpecies, reset, getNextQuestion, answerQuestion } =
+  const { answeredQuestions, selectedSpecies, reset, answerQuestion, activeQuestion } =
     useContext(IdentifyContext);
-
-  const { question, question_info } = getNextQuestion();
-
-  const sendAnswer = (answer) => answerQuestion(question, question_info, answer);
 
   return (
     <SafeArea>
       <QuestionsContainer>
-        {answeredQuestions.map(({ question, question_info }) => (
+        {answeredQuestions.map((a) => (
           <AnsweredQuestion
-            key={question}
-            prompt={question_info['prompt']}
-            answer={
-              question_info['answer'] == -1
-                ? 'unsure'
-                : question_info['options'][question_info['answer']]
-            }
+            key={a.keyset.join('.')}
+            questionSchema={a.questionSchema}
+            choice={a.choice}
+            answer={a.answer}
           />
         ))}
       </QuestionsContainer>
-      {question ? (
+      {activeQuestion.expectation ? (
         <Question
-          prompt={question_info['prompt']}
-          options={question_info['options']}
-          sendAnswer={sendAnswer}
+          questionSchema={activeQuestion.questionSchema}
+          choice={activeQuestion.choice}
+          submitAnswer={answerQuestion}
         />
       ) : (
         <SpeciesContainer>
-          {selectedSpecies.map(({ name, common_names }) => (
-            <Species key={name} name={name} common_name={common_names[0]} />
+          {selectedSpecies.map(({ name, common_name }) => (
+            <Species key={name} name={name} common_name={common_name} />
           ))}
         </SpeciesContainer>
       )}

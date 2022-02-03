@@ -7,7 +7,7 @@ import { theme } from '../theme';
 import { ShortcutsScreen } from '../screens/shortcuts.screen';
 import { IdentifyScreen } from '../screens/identify.screen';
 import { SettingsScreen } from '../screens/settings.screen';
-import { IdentifyContextProvider } from '../context/identify.context';
+import { IdentifyContextProvider } from '../context/identify/identify.context';
 
 const Tab = createBottomTabNavigator();
 
