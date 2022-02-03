@@ -70,7 +70,7 @@ export function QuestionViewRange({ questionSchema, choice, submitAnswer }) {
 export function AnswerViewRange({ questionSchema, choice, answer }) {
   return (
     <List.Item
-      title={`${questionSchema['prompt']} ${choice}`}
+      title={`${questionSchema['prompt']} ${choice}${questionSchema['unit']}`}
       titleStyle={{ fontFamily: theme.fonts.heading }}
       description={answer}
       descriptionStyle={{ fontFamily: theme.fonts.body }}

@@ -45,7 +45,7 @@ export function LoadSchema(path) {
         length: {
           kind: 'range',
           unit: 'cm',
-          prompt: 'Is the cone of length',
+          prompt: 'Is the cone longer than',
         },
         apophyses: {
           kind: 'object',
