@@ -1,19 +1,38 @@
 import React, { useContext } from 'react';
-import { Text } from 'react-native';
 
 import { SafeArea } from '../components/containers.components';
 import { QuestionsContainer, AnsweredQuestion, Question } from '../components/questions.components';
 import { IdentifyContext } from '../context/identify/identify.context';
-import { Species, SpeciesContainer } from '../components/species.components';
+import {
+  Species,
+  SpeciesContainer,
+  FindingsContainer,
+  FindingsTitle,
+} from '../components/species.components';
 import { ResetContainer, ActionButton } from '../components/buttons.components';
 
 export function IdentifyScreen() {
-  const { answeredQuestions, selectedSpecies, reset, answerQuestion, activeQuestion } =
-    useContext(IdentifyContext);
+  const {
+    answeredQuestions,
+    oldQuestions,
+    selectedSpecies,
+    reset,
+    answerQuestion,
+    activeQuestion,
+    findings,
+  } = useContext(IdentifyContext);
 
   return (
     <SafeArea>
       <QuestionsContainer>
+        {oldQuestions.map((a) => (
+          <AnsweredQuestion
+            key={a.keyset.join('.')}
+            questionSchema={a.questionSchema}
+            choice={a.choice}
+            answer={a.answer}
+          />
+        ))}
         {answeredQuestions.map((a) => (
           <AnsweredQuestion
             key={a.keyset.join('.')}
@@ -36,6 +55,11 @@ export function IdentifyScreen() {
           ))}
         </SpeciesContainer>
       )}
+      <FindingsContainer>
+        {findings.map((f) => (
+          <FindingsTitle key={f}>{f}</FindingsTitle>
+        ))}
+      </FindingsContainer>
       <ResetContainer>
         <ActionButton onPress={reset}>Reset</ActionButton>
       </ResetContainer>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { List } from 'react-native-paper';
 import styled from 'styled-components/native';
 
@@ -20,4 +20,14 @@ export const SpeciesContainer = styled(ScrollView)`
   flex: 1;
   flex-grow: 0.5;
   background-color: ${(props) => props.theme.colors.ui[3]};
+`;
+
+export const FindingsContainer = styled(View)`
+  background-color: ${(props) => props.theme.colors.ui[3]};
+  flex-direction: row;
+`;
+
+export const FindingsTitle = styled(Text)`
+  margin: 8px;
+  font-family: ${(props) => props.theme.fonts.body};
 `;
