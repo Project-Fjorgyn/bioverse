@@ -27,7 +27,7 @@ export function IdentifyScreen() {
       <QuestionsContainer>
         {oldQuestions.map((a) => (
           <AnsweredQuestion
-            key={a.keyset.join('.')}
+            key={a.keyset.join('.') + a.answer}
             questionSchema={a.questionSchema}
             choice={a.choice}
             answer={a.answer}
@@ -35,7 +35,7 @@ export function IdentifyScreen() {
         ))}
         {answeredQuestions.map((a) => (
           <AnsweredQuestion
-            key={a.keyset.join('.')}
+            key={a.keyset.join('.') + a.answer}
             questionSchema={a.questionSchema}
             choice={a.choice}
             answer={a.answer}

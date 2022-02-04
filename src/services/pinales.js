@@ -38,14 +38,14 @@ export const pinalesMembers = [
   },
   {
     name: 'Cupressaceae',
-    common_name: 'cypress',
+    common_name: 'cypress family',
     link: 'cupressaceae',
     cone: 'other',
     leaves: {},
   },
   {
     name: 'Pinaceae',
-    common_name: 'pine',
+    common_name: 'pine family',
     link: 'pinaceae',
     leaves: {},
   },
