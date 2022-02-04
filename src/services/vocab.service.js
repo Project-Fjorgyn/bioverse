@@ -9,13 +9,13 @@ export function LoadSchema(path) {
     height: {
       kind: 'range',
       unit: 'm',
-      artwork: 'tree_height.png',
+      artwork: require('../../assets/vocab/artwork/tree_height.png'),
       prompt: 'Is the tree taller than',
     },
     breast_height_diameter: {
       kind: 'range',
       unit: 'cm',
-      artwork: 'tree_width.png',
+      artwork: require('../../assets/vocab/artwork/tree_width.png'),
       prompt: 'Is the tree wider than',
     },
     needle: {
@@ -24,7 +24,7 @@ export function LoadSchema(path) {
         fascicle: {
           kind: 'set',
           values: [1, 2, 3, 4, 5, 6],
-          artwork: 'fascicle.png',
+          artwork: require('../../assets/vocab/artwork/fascicle.png'),
           prompt: 'Is the fascicle of count',
         },
         length: {
@@ -54,21 +54,30 @@ export function LoadSchema(path) {
               kind: 'categorical',
               values: ['keeled', 'not keeled'],
               default: 'not keeled',
-              artwork: ['not_thickened_scale.png', 'keeled_scale.png'],
+              artwork: {
+                'not keeled': require('../../assets/vocab/artwork/not_thickened_scale.png'),
+                keeled: require('../../assets/vocab/artwork/keeled_scale.png'),
+              },
               prompt: 'Are the apophyses',
             },
             thickened: {
               kind: 'categorical',
               values: ['thickened', 'not thickened'],
               default: 'not thickened',
-              artwork: ['thickened_scale.png', 'not_thickened_scale.png'],
+              artwork: {
+                thickened: require('../../assets/vocab/artwork/thickened_scale.png'),
+                'not thickened': require('../../assets/vocab/artwork/not_thickened_scale.png'),
+              },
               prompt: 'Are the apophyses',
             },
             raised: {
               kind: 'categorical',
               values: ['raised', 'flat'],
               default: 'flat',
-              artwork: ['raised_scale.png', 'not_raised_scale.png'],
+              artwork: {
+                raised: require('../../assets/vocab/artwork/raised_scale.png'),
+                flat: require('../../assets/vocab/artwork/not_raised_scale.png'),
+              },
               prompt: 'Are the apophyses',
             },
           },
@@ -79,21 +88,30 @@ export function LoadSchema(path) {
             position: {
               kind: 'categorical',
               values: ['terminally', 'centrally'],
-              artwork: ['terminal_umbo.png', 'central_umbo.png'],
+              artwork: {
+                terminally: require('../../assets/vocab/artwork/terminal_umbo.png'),
+                centrally: require('../../assets/vocab/artwork/central_umbo.png'),
+              },
               prompt: 'Is the umbo positioned',
             },
             prickle: {
               kind: 'categorical',
               values: ['prickeled', 'not prickled'],
               default: 'not prickled',
-              artwork: ['prickle_umbo.png', 'central_umbo.png'],
+              artwork: {
+                prickled: require('../../assets/vocab/artwork/prickle_umbo.png'),
+                'not prickled': require('../../assets/vocab/artwork/central_umbo.png'),
+              },
               prompt: 'Is the umbo',
             },
             pyramidal: {
               kind: 'categorical',
               values: ['pyramidal', 'not pyramidal'],
               default: 'not pyramidal',
-              artwork: ['pyramidal_umbo.png', 'central_umbo.png'],
+              artwork: {
+                pyramidal: require('../../assets/vocab/artwork/pyramidal_umbo.png'),
+                'not pyramidal': require('../../assets/vocab/artwork/central_umbo.png'),
+              },
               prompt: 'Is the umbo',
             },
           },
