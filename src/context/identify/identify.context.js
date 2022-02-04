@@ -65,20 +65,27 @@ function FilterTaxa(selectedQuestion, answer, taxa) {
 export const IdentifyContext = createContext();
 
 export function IdentifyContextProvider({ children }) {
-  const topLevel = 'pinales';
+  const [topLevel, setTopLevel] = useState('pinales');
   const [path, setPath] = useState([topLevel]);
   const [schema, setSchema] = useState(LoadSchema(path[path.length - 1]));
   const [selectedSpecies, setSelectedSpecies] = useState(LoadTaxa(path[path.length - 1]));
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
   const [oldQuestions, setOldQuestions] = useState([]);
   const [findings, setFindings] = useState([]);
-  const [activeQuestion, setActiveQuestion] = useState(
-    SelectQuestion(
-      schema,
-      answeredQuestions.map((a) => a.keyset.join('.')),
-      selectedSpecies
-    )
-  );
+  const [activeQuestion, setActiveQuestion] = useState(SelectQuestion(schema, [], selectedSpecies));
+
+  const updateTopLevel = (top, name) => {
+    setTopLevel(top);
+    setFindings([name]);
+    setPath([top]);
+    var new_schema = LoadSchema([top]);
+    setSchema(new_schema);
+    setSelectedSpecies(LoadTaxa([top]));
+    setAnsweredQuestions([]);
+    setOldQuestions([]);
+    var new_question = SelectQuestion(new_schema, [], LoadTaxa([top]));
+    setActiveQuestion(new_question);
+  };
 
   const reset = () => {
     setFindings([]);
@@ -97,9 +104,12 @@ export function IdentifyContextProvider({ children }) {
     var filteredSpecies = FilterTaxa(activeQuestion, answer, selectedSpecies);
     setSelectedSpecies(filteredSpecies);
     setAnsweredQuestions([...answeredQuestions, activeQuestion]);
+    var questions_to_skip = [...answeredQuestions, activeQuestion].filter(
+      (a) => a['answer'] === 'unsure'
+    );
     var new_question = SelectQuestion(
       schema,
-      [...answeredQuestions, activeQuestion].map((a) => a.keyset.join('.')),
+      questions_to_skip.map((a) => a.keyset.join('.')),
       filteredSpecies
     );
     setActiveQuestion(new_question);
@@ -132,6 +142,7 @@ export function IdentifyContextProvider({ children }) {
         reset,
         answerQuestion,
         findings,
+        updateTopLevel,
       }}
     >
       {children}
