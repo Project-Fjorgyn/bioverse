@@ -65,10 +65,13 @@ function FilterTaxa(selectedQuestion, answer, taxa) {
 export const IdentifyContext = createContext();
 
 export function IdentifyContextProvider({ children }) {
-  const [path, setPath] = useState(['pinus']);
-  const [schema, setSchema] = useState(LoadSchema(path));
-  const [selectedSpecies, setSelectedSpecies] = useState(LoadTaxa(path));
+  const topLevel = 'pinales';
+  const [path, setPath] = useState([topLevel]);
+  const [schema, setSchema] = useState(LoadSchema(path[path.length - 1]));
+  const [selectedSpecies, setSelectedSpecies] = useState(LoadTaxa(path[path.length - 1]));
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
+  const [oldQuestions, setOldQuestions] = useState([]);
+  const [findings, setFindings] = useState([]);
   const [activeQuestion, setActiveQuestion] = useState(
     SelectQuestion(
       schema,
@@ -78,9 +81,14 @@ export function IdentifyContextProvider({ children }) {
   );
 
   const reset = () => {
-    setSelectedSpecies(LoadTaxa(path));
+    setFindings([]);
+    setPath([topLevel]);
+    var new_schema = LoadSchema([topLevel]);
+    setSchema(new_schema);
+    setSelectedSpecies(LoadTaxa([topLevel]));
     setAnsweredQuestions([]);
-    var new_question = SelectQuestion(schema, [], LoadTaxa(path));
+    setOldQuestions([]);
+    var new_question = SelectQuestion(new_schema, [], LoadTaxa([topLevel]));
     setActiveQuestion(new_question);
   };
 
@@ -95,6 +103,23 @@ export function IdentifyContextProvider({ children }) {
       filteredSpecies
     );
     setActiveQuestion(new_question);
+    if (
+      filteredSpecies.length == 1 &&
+      'link' in filteredSpecies[0] &&
+      LoadSchema(filteredSpecies[0]['link'])
+    ) {
+      var link = filteredSpecies[0]['link'];
+      var newSchema = LoadSchema(link);
+      var newSpecies = LoadTaxa(link);
+      setFindings([...findings, filteredSpecies[0]['name']]);
+      setSchema(newSchema);
+      setSelectedSpecies(newSpecies);
+      setPath([...path, link]);
+      setOldQuestions([...oldQuestions, ...answeredQuestions, activeQuestion]);
+      setAnsweredQuestions([]);
+      var new_question = SelectQuestion(newSchema, [], newSpecies);
+      setActiveQuestion(new_question);
+    }
   };
 
   return (
@@ -102,9 +127,11 @@ export function IdentifyContextProvider({ children }) {
       value={{
         activeQuestion,
         answeredQuestions,
+        oldQuestions,
         selectedSpecies,
         reset,
         answerQuestion,
+        findings,
       }}
     >
       {children}
