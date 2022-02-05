@@ -1,3 +1,3 @@
 export const colors = {
-  ui: ['#606C38', '#283618', '#FEFAE0', '#DDA15E', '#BC6C25'],
+  ui: ['#2C3C97', '#9E1F63', '#EFBE3F', '#5AC9E9', '#EFBE3F'],
 };
