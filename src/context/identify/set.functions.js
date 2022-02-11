@@ -38,15 +38,19 @@ function WeightsUnderSetChoice(choice, options) {
   };
 }
 
-export function ChooseQuestionSet(values, options) {
+export function ChooseQuestionSet(values, options, used_choices) {
   /*
     values: possible options
     options: an array of question values for each taxa 
+    used_choices: questions already asked
   */
   var expectation = 0;
   var choice = null;
   for (let i in values) {
     var value = values[i];
+    if (used_choices.some((c) => c === value)) {
+      continue;
+    }
     var { removed_under_yes, removed_under_no } = OptionsRemovedUnderSetChoice(value, options);
     var { weight_under_yes, weight_under_no } = WeightsUnderSetChoice(value, options);
     var current_expectation = GetExpectation(

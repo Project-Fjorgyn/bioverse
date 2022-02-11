@@ -1,14 +1,18 @@
 import { GetExpectation } from './base';
 
-export function ChooseQuestionCategorical(values, options) {
+export function ChooseQuestionCategorical(values, options, used_choices) {
   /*
     values: possible options
     options: an array of question values for each taxa 
+    used_choices: questions already asked
   */
   var choice = null;
   var expectation = -1;
   for (let i in values) {
     var new_choice = values[i];
+    if (used_choices.some((c) => c === values)) {
+      continue;
+    }
     removed_under_no = options.reduce(
       (prior, current) => (current === new_choice ? prior + 1 : prior),
       0

@@ -4,7 +4,14 @@ import { buildQuestion, BuildOptions } from './builder.functions';
 import { filterOptions } from './filter.functions';
 import { LoadSchema, LoadTaxa } from '../../services/vocab.service';
 
-function SelectQuestion(schema, answered, taxa, accumulatedKeyset = null) {
+function get(obj, key, fallback) {
+  if (key in obj) {
+    return obj[key];
+  }
+  return fallback;
+}
+
+function SelectQuestion(schema, to_skip, answers, taxa, accumulatedKeyset = null) {
   /*
     schema: current schema level for taxa in question
     taxa: full list of taxa under consideration
@@ -25,7 +32,7 @@ function SelectQuestion(schema, answered, taxa, accumulatedKeyset = null) {
 
   for (let key in schema) {
     var question_id = [...accumulatedKeyset, key].join('.');
-    if (answered.some((id) => id === question_id)) {
+    if (to_skip.some((id) => id === question_id)) {
       continue;
     }
     var question = { expectation: 0 };
@@ -34,14 +41,25 @@ function SelectQuestion(schema, answered, taxa, accumulatedKeyset = null) {
     if (kind === 'set' || kind === 'categorical' || kind === 'range') {
       question_keyset = [...accumulatedKeyset, key];
       options = BuildOptions(question_keyset, schema[key], taxa);
-      question = buildQuestion[kind](schema[key]['values'], options);
+      question = buildQuestion[kind](
+        schema[key]['values'],
+        options,
+        get(answers, question_keyset.join('.'), [])
+      );
       question['questionSchema'] = schema[key];
       question['keyset'] = question_keyset;
     } else if (schema[key]['kind'] === 'object') {
       var newAccumulatedKeyset = [...accumulatedKeyset, key];
-      var result = SelectQuestion(schema[key]['members'], answered, taxa, newAccumulatedKeyset);
+      var result = SelectQuestion(
+        schema[key]['members'],
+        to_skip,
+        answers,
+        taxa,
+        newAccumulatedKeyset
+      );
       question = result;
     }
+
     if (question.expectation > selectedQuestion.expectation) {
       selectedQuestion = question;
     }
@@ -72,7 +90,9 @@ export function IdentifyContextProvider({ children }) {
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
   const [oldQuestions, setOldQuestions] = useState([]);
   const [findings, setFindings] = useState([]);
-  const [activeQuestion, setActiveQuestion] = useState(SelectQuestion(schema, [], selectedSpecies));
+  const [activeQuestion, setActiveQuestion] = useState(
+    SelectQuestion(schema, [], {}, selectedSpecies)
+  );
 
   const updateTopLevel = (top, name) => {
     setTopLevel(top);
@@ -83,7 +103,7 @@ export function IdentifyContextProvider({ children }) {
     setSelectedSpecies(LoadTaxa([top]));
     setAnsweredQuestions([]);
     setOldQuestions([]);
-    var new_question = SelectQuestion(new_schema, [], LoadTaxa([top]));
+    var new_question = SelectQuestion(new_schema, [], {}, LoadTaxa([top]));
     setActiveQuestion(new_question);
   };
 
@@ -95,8 +115,23 @@ export function IdentifyContextProvider({ children }) {
     setSelectedSpecies(LoadTaxa([topLevel]));
     setAnsweredQuestions([]);
     setOldQuestions([]);
-    var new_question = SelectQuestion(new_schema, [], LoadTaxa([topLevel]));
+    var new_question = SelectQuestion(new_schema, [], {}, LoadTaxa([topLevel]));
     setActiveQuestion(new_question);
+  };
+
+  const buildAnswerSummary = (answered_questions) => {
+    var summary = {};
+    for (let i in answered_questions) {
+      var question = answered_questions[i];
+      if (question['answer'] !== 'unsure') {
+        var key = question['keyset'].join('.');
+        if (!(key in summary)) {
+          summary[key] = [];
+        }
+        summary[key].push(question['choice']);
+      }
+    }
+    return summary;
   };
 
   const answerQuestion = (answer) => {
@@ -110,6 +145,7 @@ export function IdentifyContextProvider({ children }) {
     var new_question = SelectQuestion(
       schema,
       questions_to_skip.map((a) => a.keyset.join('.')),
+      buildAnswerSummary([...answeredQuestions, activeQuestion]),
       filteredSpecies
     );
     setActiveQuestion(new_question);
@@ -127,7 +163,7 @@ export function IdentifyContextProvider({ children }) {
       setPath([...path, link]);
       setOldQuestions([...oldQuestions, ...answeredQuestions, activeQuestion]);
       setAnsweredQuestions([]);
-      var new_question = SelectQuestion(newSchema, [], newSpecies);
+      var new_question = SelectQuestion(newSchema, [], {}, newSpecies);
       setActiveQuestion(new_question);
     }
   };

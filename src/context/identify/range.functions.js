@@ -10,9 +10,10 @@ function WeightsUnderRangeChoice(removed_under_yes, removed_under_no, total) {
   };
 }
 
-export function ChooseQuestionRange(options) {
+export function ChooseQuestionRange(options, used_choices) {
   /*
-    options: an array of ranges for each taxa 
+    options: an array of ranges for each taxa
+    used_choices: questions already asked 
   */
   // we start by finding all the points at which
   // a range decision could make a difference
@@ -54,6 +55,11 @@ export function ChooseQuestionRange(options) {
     [removed_under_no, removed_under_yes],
     [weight_under_no, weight_under_yes]
   );
+  // in case our first option is not allowed
+  if (used_choices.some((c) => c === choice)) {
+    choice = null;
+    expectation = 0;
+  }
   // now we loop through the remaining events
   for (let i = 1; i < sorted_events.length; i++) {
     var new_choice = sorted_events[i];
@@ -75,8 +81,10 @@ export function ChooseQuestionRange(options) {
       [weight_under_no, weight_under_yes]
     );
     if (new_expectation > expectation) {
-      choice = new_choice;
-      expectation = new_expectation;
+      if (!used_choices.some((c) => c === new_choice)) {
+        choice = new_choice;
+        expectation = new_expectation;
+      }
     }
   }
   return {

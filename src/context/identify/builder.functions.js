@@ -2,36 +2,39 @@ import { ChooseQuestionSet } from './set.functions';
 import { ChooseQuestionRange } from './range.functions';
 import { ChooseQuestionCategorical } from './categorical.functions';
 
-export function BuildQuestionSet(values, options) {
+export function BuildQuestionSet(values, options, used_choices) {
   /*
     values: possible options
     options: an array of question values for each taxa 
+    used_choices: questions already asked
   */
-  var { choice, expectation } = ChooseQuestionSet(values, options);
+  var { choice, expectation } = ChooseQuestionSet(values, options, used_choices);
   return {
     choice,
     expectation,
   };
 }
 
-export function BuildQuestionRange(values, options) {
+export function BuildQuestionRange(values, options, used_choices) {
   /*
     values: possible options
     options: an array of question values for each taxa 
+    used_choices: questions already asked
   */
-  var { choice, expectation } = ChooseQuestionRange(options);
+  var { choice, expectation } = ChooseQuestionRange(options, used_choices);
   return {
     choice,
     expectation,
   };
 }
 
-export function BuildQuestionCategorical(values, options) {
+export function BuildQuestionCategorical(values, options, used_choices) {
   /*
     values: possible options
     options: an array of question values for each taxa 
+    used_choices: questions already asked
   */
-  var { choice, expectation } = ChooseQuestionCategorical(values, options);
+  var { choice, expectation } = ChooseQuestionCategorical(values, options, used_choices);
   return {
     choice,
     expectation,
