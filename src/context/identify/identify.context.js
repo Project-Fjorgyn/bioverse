@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 
 import { buildQuestion, BuildOptions } from './builder.functions';
 import { filterOptions } from './filter.functions';
-import { LoadSchema, LoadTaxa } from '../../services/vocab.service';
+import { LoadSchema, LoadTaxa } from '../../services/vocab/vocab.service';
 
 function get(obj, key, fallback) {
   if (key in obj) {
@@ -83,7 +83,7 @@ function FilterTaxa(selectedQuestion, answer, taxa) {
 export const IdentifyContext = createContext();
 
 export function IdentifyContextProvider({ children }) {
-  const [topLevel, setTopLevel] = useState('pinales');
+  const [topLevel, setTopLevel] = useState('pinus');
   const [path, setPath] = useState([topLevel]);
   const [schema, setSchema] = useState(LoadSchema(path[path.length - 1]));
   const [selectedSpecies, setSelectedSpecies] = useState(LoadTaxa(path[path.length - 1]));
@@ -98,9 +98,9 @@ export function IdentifyContextProvider({ children }) {
     setTopLevel(top);
     setFindings([name]);
     setPath([top]);
-    var new_schema = LoadSchema([top]);
+    var new_schema = LoadSchema(top);
     setSchema(new_schema);
-    setSelectedSpecies(LoadTaxa([top]));
+    setSelectedSpecies(LoadTaxa(top));
     setAnsweredQuestions([]);
     setOldQuestions([]);
     var new_question = SelectQuestion(new_schema, [], {}, LoadTaxa([top]));
