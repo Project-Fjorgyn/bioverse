@@ -1,6 +1,3 @@
-import { pinusMembers } from './pinus';
-import { pinalesSchema, pinalesMembers } from './pinales';
-import { pinaceaeSchema, pinaceaeMembers } from './pinaceae';
 import { referenceArt } from './helpers';
 
 const ARTWORK = {
@@ -20,16 +17,22 @@ const ARTWORK = {
 
 export function LoadSchema(path) {
   return {
-    pinus: referenceArt(require('../../../assets/vocab/data/pinus/schema.json'), ARTWORK),
-    pinales: pinalesSchema,
-    pinaceae: pinaceaeSchema,
+    pinus: referenceArt(
+      require('../../../assets/vocab/data/pinales/pinaceae/pinus/schema.json'),
+      ARTWORK
+    ),
+    pinales: referenceArt(require('../../../assets/vocab/data/pinales/schema.json'), ARTWORK),
+    pinaceae: referenceArt(
+      require('../../../assets/vocab/data/pinales/pinaceae/schema.json'),
+      ARTWORK
+    ),
   }[path];
 }
 
 export function LoadTaxa(path) {
   return {
-    pinus: pinusMembers,
-    pinales: pinalesMembers,
-    pinaceae: pinaceaeMembers,
+    pinus: require('../../../assets/vocab/data/pinales/pinaceae/pinus/members.json'),
+    pinales: require('../../../assets/vocab/data/pinales/members.json'),
+    pinaceae: require('../../../assets/vocab/data/pinales/pinaceae/members.json'),
   }[path];
 }
