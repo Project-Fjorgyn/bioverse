@@ -4,7 +4,7 @@ import { BuildTree } from '../services/vocab/vocab.service';
 export const ShortcutsContext = createContext();
 
 export function ShortcutsContextProvider({ children }) {
-  const [shortcuts, setShortcuts] = useState([BuildTree('Pinales', 'conifers', 'pinales')]);
+  const [shortcuts, setShortcuts] = useState([BuildTree('Trees', 'trees', 'trees')]);
 
   const addShortcut = () => null;
 
