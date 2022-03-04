@@ -9,7 +9,6 @@
   {
     "name": "Abies",
     "common_name": "fir",
-    "link": "abies",
     "cone": {},
     "needle": {
       "rollability": "not rollable"
@@ -18,7 +17,6 @@
   {
     "name": "Picea",
     "common_name": "spruce",
-    "link": "picea",
     "cone": {
       "flexibility": "flexible"
     },

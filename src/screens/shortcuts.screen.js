@@ -1,32 +1,30 @@
 import React, { useContext } from 'react';
 import { ScrollView } from 'react-native';
-import { List } from 'react-native-paper';
 
 import { SafeArea } from '../components/containers.components';
 import { IdentifyContext } from '../context/identify/identify.context';
 import { ShortcutsContext } from '../context/shortcuts.context';
-import { theme } from '../theme';
+import { ShortcutWithMembers, ShortcutWithoutMembers } from '../components/shortcuts.components';
 
 export function ShortcutsScreen({ navigation }) {
-  const { shortcuts, removeShortCut } = useContext(ShortcutsContext);
+  const { shortcuts } = useContext(ShortcutsContext);
   const { updateTopLevel } = useContext(IdentifyContext);
+
+  const doShortcut = (link, name) => {
+    updateTopLevel(link, name);
+    navigation.navigate('Identify');
+  };
 
   return (
     <SafeArea>
       <ScrollView>
-        {shortcuts.map((t) => (
-          <List.Item
-            key={t.name}
-            title={t.name}
-            titleStyle={{ fontFamily: theme.fonts.heading }}
-            description={t.common_name}
-            descriptionStyle={{ fontFamily: theme.fonts.body }}
-            onPress={() => {
-              updateTopLevel(t.link, t.name);
-              navigation.navigate('Identify');
-            }}
-          />
-        ))}
+        {shortcuts.map((t) =>
+          t.members.length > 0 ? (
+            <ShortcutWithMembers key={t.name} shortcut={t} doShortcut={doShortcut} />
+          ) : (
+            <ShortcutWithoutMembers key={t.name} shortcut={t} doShortcut={doShortcut} />
+          )
+        )}
       </ScrollView>
     </SafeArea>
   );

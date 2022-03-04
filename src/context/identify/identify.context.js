@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 
 import { buildQuestion, BuildOptions } from './builder.functions';
 import { filterOptions } from './filter.functions';
@@ -98,12 +98,12 @@ export function IdentifyContextProvider({ children }) {
     setTopLevel(top);
     setFindings([name]);
     setPath([top]);
-    var new_schema = LoadSchema(top);
+    const new_schema = LoadSchema(top);
     setSchema(new_schema);
     setSelectedSpecies(LoadTaxa(top));
     setAnsweredQuestions([]);
     setOldQuestions([]);
-    var new_question = SelectQuestion(new_schema, [], {}, LoadTaxa([top]));
+    var new_question = SelectQuestion(new_schema, [], {}, LoadTaxa(top));
     setActiveQuestion(new_question);
   };
 

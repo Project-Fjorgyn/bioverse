@@ -36,3 +36,22 @@ export function LoadTaxa(path) {
     pinaceae: require('../../../assets/vocab/data/pinales/pinaceae/members.json'),
   }[path];
 }
+
+export function BuildTree(name, common_name, link) {
+  var links = {
+    name,
+    common_name,
+    link,
+    members: [],
+  };
+  const members = LoadTaxa(link);
+  if (members) {
+    for (let i in members) {
+      var { name, common_name, link } = members[i];
+      if (link) {
+        links.members.push(BuildTree(name, common_name, link));
+      }
+    }
+  }
+  return links;
+}

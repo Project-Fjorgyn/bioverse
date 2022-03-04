@@ -2,7 +2,6 @@
   {
     "name": "Araucariaceae",
     "common_name": "araucaria",
-    "link": "araucariaceae",
     "leaves": {
       "needle": "broadleaves"
     }
@@ -10,7 +9,6 @@
   {
     "name": "Cupressaceae",
     "common_name": "cypress family",
-    "link": "cupressaceae",
     "cone": "other",
     "leaves": {}
   },
@@ -23,7 +21,6 @@
   {
     "name": "Taxaceae",
     "common_name": "yew",
-    "link": "taxaceae",
     "cone": "red fruit",
     "leaves": {}
   }
