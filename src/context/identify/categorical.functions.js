@@ -8,6 +8,14 @@ export function ChooseQuestionCategorical(values, options, used_choices) {
   */
   var choice = null;
   var expectation = -1;
+  if (values.length === used_choices.length + 1) {
+    // in this case we've actually answered all the
+    // the questions
+    return {
+      choice,
+      expectation,
+    };
+  }
   for (let i in values) {
     var new_choice = values[i];
     if (used_choices.some((c) => c === values)) {

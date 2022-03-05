@@ -46,6 +46,14 @@ export function ChooseQuestionSet(values, options, used_choices) {
   */
   var expectation = 0;
   var choice = null;
+  if (values.length === used_choices.length + 1) {
+    // in this case we've actually answered all the
+    // the questions
+    return {
+      choice,
+      expectation,
+    };
+  }
   for (let i in values) {
     var value = values[i];
     if (used_choices.some((c) => c === value)) {
