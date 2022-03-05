@@ -60,6 +60,7 @@ export function ChooseQuestionRange(options, used_choices) {
     choice = null;
     expectation = 0;
   }
+  var first_choice = true;
   // now we loop through the remaining events
   for (let i = 1; i < sorted_events.length; i++) {
     var new_choice = sorted_events[i];
@@ -80,8 +81,11 @@ export function ChooseQuestionRange(options, used_choices) {
       [removed_under_no, removed_under_yes],
       [weight_under_no, weight_under_yes]
     );
-    if (new_expectation > expectation) {
+    // note if we chose the first choice we'd
+    // eliminate every species!
+    if (new_expectation > expectation || first_choice) {
       if (!used_choices.some((c) => c === new_choice)) {
+        first_choice = false;
         choice = new_choice;
         expectation = new_expectation;
       }
