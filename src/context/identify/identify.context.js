@@ -83,7 +83,7 @@ function FilterTaxa(selectedQuestion, answer, taxa) {
 export const IdentifyContext = createContext();
 
 export function IdentifyContextProvider({ children }) {
-  const [topLevel, setTopLevel] = useState('pinus');
+  const [topLevel, setTopLevel] = useState('trees');
   const [path, setPath] = useState([topLevel]);
   const [schema, setSchema] = useState(LoadSchema(path[path.length - 1]));
   const [selectedSpecies, setSelectedSpecies] = useState(LoadTaxa(path[path.length - 1]));
