@@ -100,15 +100,17 @@ export function IdentifyContextProvider({ children }) {
     setPath([top]);
     const new_schema = LoadSchema(top);
     setSchema(new_schema);
-    setSelectedSpecies(LoadTaxa(top));
+    var new_species = LoadTaxa(top);
+    setSelectedSpecies(new_species);
     setAnsweredQuestions([]);
     setOldQuestions([]);
-    var new_question = SelectQuestion(new_schema, [], {}, LoadTaxa(top));
+    var new_question = SelectQuestion(new_schema, [], {}, new_species);
     setActiveQuestion(new_question);
+    followLinks(new_species, [], [], new_question, [name]);
   };
 
   const reset = () => {
-    setFindings([]);
+    setFindings([topLevel]);
     setPath([topLevel]);
     var new_schema = LoadSchema([topLevel]);
     setSchema(new_schema);
@@ -134,6 +136,29 @@ export function IdentifyContextProvider({ children }) {
     return summary;
   };
 
+  const followLinks = (species, oldQuestions, answeredQuestions, activeQuestion, findings) => {
+    if (species.length == 1 && 'link' in species[0] && LoadSchema(species[0]['link'])) {
+      var link = species[0]['link'];
+      var newSchema = LoadSchema(link);
+      var newSpecies = LoadTaxa(link);
+      var newFindings = [...findings, species[0]['name']];
+      setFindings(newFindings);
+      setSchema(newSchema);
+      setSelectedSpecies(newSpecies);
+      setPath([...path, link]);
+      if (activeQuestion.expectation > 0) {
+        newOldQuestions = [...oldQuestions, ...answeredQuestions, activeQuestion];
+      } else {
+        newOldQuestions = [...oldQuestions, ...answeredQuestions];
+      }
+      setOldQuestions(newOldQuestions);
+      setAnsweredQuestions([]);
+      var new_question = SelectQuestion(newSchema, [], {}, newSpecies);
+      setActiveQuestion(new_question);
+      followLinks(newSpecies, newOldQuestions, [], new_question, newFindings);
+    }
+  };
+
   const answerQuestion = (answer) => {
     activeQuestion['answer'] = answer;
     var filteredSpecies = FilterTaxa(activeQuestion, answer, selectedSpecies);
@@ -149,23 +174,7 @@ export function IdentifyContextProvider({ children }) {
       filteredSpecies
     );
     setActiveQuestion(new_question);
-    if (
-      filteredSpecies.length == 1 &&
-      'link' in filteredSpecies[0] &&
-      LoadSchema(filteredSpecies[0]['link'])
-    ) {
-      var link = filteredSpecies[0]['link'];
-      var newSchema = LoadSchema(link);
-      var newSpecies = LoadTaxa(link);
-      setFindings([...findings, filteredSpecies[0]['name']]);
-      setSchema(newSchema);
-      setSelectedSpecies(newSpecies);
-      setPath([...path, link]);
-      setOldQuestions([...oldQuestions, ...answeredQuestions, activeQuestion]);
-      setAnsweredQuestions([]);
-      var new_question = SelectQuestion(newSchema, [], {}, newSpecies);
-      setActiveQuestion(new_question);
-    }
+    followLinks(filteredSpecies, oldQuestions, answeredQuestions, activeQuestion, findings);
   };
 
   return (
