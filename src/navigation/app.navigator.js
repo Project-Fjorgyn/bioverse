@@ -4,9 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 import { theme } from '../theme';
-import { ShortcutsScreen } from '../screens/shortcuts.screen';
-import { IdentifyScreen } from '../screens/identify.screen';
+import { ExploreScreen } from '../screens/explore.screen';
 import { SettingsScreen } from '../screens/settings.screen';
+import { IdentifyNavigator } from './identify.navigator';
 import { IdentifyContextProvider } from '../context/identify/identify.context';
 import { ShortcutsContextProvider } from '../context/shortcuts.context';
 
@@ -25,8 +25,8 @@ export function AppNavigator() {
               tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
 
-                if (route.name === 'Shortcuts') {
-                  iconName = focused ? 'save' : 'save-outline';
+                if (route.name === 'Explore') {
+                  iconName = focused ? 'walk-outline' : 'walk';
                 } else if (route.name === 'Identify') {
                   iconName = focused ? 'search-circle' : 'search-circle-outline';
                 } else if (route.name === 'Settings') {
@@ -40,8 +40,8 @@ export function AppNavigator() {
               tabBarInactiveTintColor: theme.colors.ui[3],
             })}
           >
-            <Tab.Screen name="Shortcuts" component={ShortcutsScreen} />
-            <Tab.Screen name="Identify" component={IdentifyScreen} />
+            <Tab.Screen name="Identify" component={IdentifyNavigator} />
+            <Tab.Screen name="Explore" component={ExploreScreen} />
             <Tab.Screen name="Settings" component={SettingsScreen} />
           </Tab.Navigator>
         </IdentifyContextProvider>

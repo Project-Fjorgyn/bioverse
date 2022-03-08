@@ -12,7 +12,7 @@ export function ShortcutsScreen({ navigation }) {
 
   const doShortcut = (link, name) => {
     updateTopLevel(link, name);
-    navigation.navigate('Identify');
+    navigation.navigate('IdentifyScreen');
   };
 
   return (
