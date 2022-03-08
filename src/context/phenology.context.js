@@ -6,6 +6,16 @@ export const PhenologyContext = createContext();
 
 export function PhenologyContextProvider({ children }) {
   const [phenology, setPhenology] = useState(GetPhenology(3));
+  const [month, setMonth] = useState(3);
 
-  return <PhenologyContext.Provider value={{ phenology }}>{children}</PhenologyContext.Provider>;
+  const updateMonth = (month) => {
+    setMonth(month);
+    setPhenology(GetPhenology(month));
+  };
+
+  return (
+    <PhenologyContext.Provider value={{ phenology, month, updateMonth }}>
+      {children}
+    </PhenologyContext.Provider>
+  );
 }
