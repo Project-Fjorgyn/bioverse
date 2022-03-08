@@ -37,7 +37,7 @@ export const PhenologyScreen = ({ navigation }) => {
           <Phenophase
             key={p.genus + p.species + p.month + p.phenophase_name}
             name={p.genus + ' ' + p.species}
-            common_name={p.common_name + '\n' + p.phenophase_name}
+            description={p.common_name + '\n' + p.phenophase_name}
             onPress={() =>
               navigation.navigate('WebViewScreen', {
                 uri: `https://en.wikipedia.org/wiki/${p.genus}_${p.species}`,

@@ -11,7 +11,7 @@ import {
 } from '../components/species.components';
 import { ResetContainer, ActionButton } from '../components/buttons.components';
 
-export function IdentifyScreen() {
+export function IdentifyScreen({ navigation }) {
   const {
     answeredQuestions,
     oldQuestions,
@@ -51,7 +51,16 @@ export function IdentifyScreen() {
       ) : (
         <SpeciesContainer>
           {selectedSpecies.map(({ name, common_name }) => (
-            <Species key={name} name={name} common_name={common_name} />
+            <Species
+              key={name}
+              name={name}
+              common_name={common_name}
+              onPress={() =>
+                navigation.navigate('WebViewScreen', {
+                  uri: `https://en.wikipedia.org/wiki/${findings[findings.length - 1]}_${name}`,
+                })
+              }
+            />
           ))}
         </SpeciesContainer>
       )}

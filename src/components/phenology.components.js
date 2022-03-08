@@ -3,12 +3,12 @@ import { List } from 'react-native-paper';
 
 import { theme } from '../theme';
 
-export function Phenophase({ name, common_name, onPress }) {
+export function Phenophase({ name, description, onPress }) {
   return (
     <List.Item
       title={name}
       titleStyle={{ fontFamily: theme.fonts.heading }}
-      description={common_name}
+      description={description}
       descriptionStyle={{ fontFamily: theme.fonts.body }}
       onPress={onPress}
     />
