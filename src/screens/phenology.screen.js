@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ScrollView } from 'react-native';
 
 import { SafeArea } from '../components/containers.components';
 import { PhenologyContext } from '../context/phenology.context';
-import { Species } from '../components/species.components';
 import { Selector } from '../components/selector.components';
+import { Phenophase } from '../components/phenology.components';
 
-export const PhenologyScreen = () => {
+export const PhenologyScreen = ({ navigation }) => {
   const { phenology, month, updateMonth } = useContext(PhenologyContext);
 
   const MONTHS = [
@@ -34,11 +34,16 @@ export const PhenologyScreen = () => {
       />
       <ScrollView>
         {phenology.map((p) => (
-          <Species
+          <Phenophase
             key={p.genus + p.species + p.month + p.phenophase_name}
             name={p.genus + ' ' + p.species}
             common_name={p.common_name + '\n' + p.phenophase_name}
-          ></Species>
+            onPress={() =>
+              navigation.navigate('WebViewScreen', {
+                uri: `https://en.wikipedia.org/wiki/${p.genus}_${p.species}`,
+              })
+            }
+          ></Phenophase>
         ))}
       </ScrollView>
     </SafeArea>

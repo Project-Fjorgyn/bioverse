@@ -4,12 +4,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 import { theme } from '../theme';
-import { PhenologyScreen } from '../screens/phenology.screen';
 import { SettingsScreen } from '../screens/settings.screen';
 import { IdentifyNavigator } from './identify.navigator';
 import { IdentifyContextProvider } from '../context/identify/identify.context';
 import { ShortcutsContextProvider } from '../context/shortcuts.context';
 import { PhenologyContextProvider } from '../context/phenology.context';
+import { ExploreNavigator } from './explore.navigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +43,7 @@ export function AppNavigator() {
               })}
             >
               <Tab.Screen name="Identify" component={IdentifyNavigator} />
-              <Tab.Screen name="Explore" component={PhenologyScreen} />
+              <Tab.Screen name="Explore" component={ExploreNavigator} />
               <Tab.Screen name="Settings" component={SettingsScreen} />
             </Tab.Navigator>
           </PhenologyContextProvider>
