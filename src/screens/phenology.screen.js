@@ -26,18 +26,18 @@ export const PhenologyScreen = () => {
 
   return (
     <SafeArea>
+      <Selector
+        title={MONTHS.filter((m) => m.value === month)[0].title}
+        items={MONTHS}
+        action={updateMonth}
+        expanded={false}
+      />
       <ScrollView>
-        <Selector
-          title={MONTHS.filter((m) => m.value === month)[0].title}
-          items={MONTHS}
-          action={updateMonth}
-          expanded={false}
-        />
         {phenology.map((p) => (
           <Species
             key={p.genus + p.species + p.month + p.phenophase_name}
             name={p.genus + ' ' + p.species}
-            common_name={p.phenophase_name}
+            common_name={p.common_name + '\n' + p.phenophase_name}
           ></Species>
         ))}
       </ScrollView>
