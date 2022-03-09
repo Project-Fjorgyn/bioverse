@@ -40,7 +40,7 @@ export const PhenologyScreen = ({ navigation }) => {
             description={p.common_name + '\n' + p.phenophase_name}
             onPress={() =>
               navigation.navigate('WebViewScreen', {
-                uri: `https://en.wikipedia.org/wiki/${p.genus}_${p.species}`,
+                uri: `https://www.inaturalist.org/taxa/${p.genus}-${p.species}`,
               })
             }
           ></Phenophase>
