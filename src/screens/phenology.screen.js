@@ -5,9 +5,11 @@ import { SafeArea } from '../components/containers.components';
 import { PhenologyContext } from '../context/phenology.context';
 import { Selector } from '../components/selector.components';
 import { Phenophase } from '../components/phenology.components';
+import { InfoContext } from '../context/info.context';
 
 export const PhenologyScreen = ({ navigation }) => {
   const { phenology, month, updateMonth } = useContext(PhenologyContext);
+  const { updateSelection } = useContext(InfoContext);
 
   const MONTHS = [
     { title: 'January', value: 1 },
@@ -38,11 +40,10 @@ export const PhenologyScreen = ({ navigation }) => {
             key={p.genus + p.species + p.month + p.phenophase_name}
             name={p.genus + ' ' + p.species}
             description={p.common_name + '\n' + p.phenophase_name}
-            onPress={() =>
-              navigation.navigate('WebViewScreen', {
-                uri: `https://www.inaturalist.org/taxa/${p.genus}-${p.species}`,
-              })
-            }
+            onPress={() => {
+              updateSelection(p.genus, p.species);
+              navigation.navigate('Find');
+            }}
           ></Phenophase>
         ))}
       </ScrollView>
