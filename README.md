@@ -1,14 +1,3 @@
 # bioverse
 
-Check out the app! https://expo.dev/@mgietzmann/bioverse
-
-Attempts to:
-
-- Ask only clear, straightforward questions
-- Ask the fewest, most discerning questions
-- Deal with missing information during identification
-- Generalize across all taxa
-- Be pocket size
-- Be usable in the field
-
-The front end to the [data](https://github.com/Project-Fjorgyn/bioverse-vocab).
+Implements this! https://www.thetide.online/post/bioverse-0-2
