@@ -9,7 +9,7 @@ import { InfoContext } from '../context/info.context';
 import { LocationContext } from '../context/location.context';
 
 export const PhenologyScreen = ({ navigation }) => {
-  const { phenology, month, updateMonth } = useContext(PhenologyContext);
+  const { phenology, month, updateMonth, phenoPhase, setPhenoPhase } = useContext(PhenologyContext);
   const { updateSelection } = useContext(InfoContext);
   const { updateLocationSelection } = useContext(LocationContext);
 
@@ -28,6 +28,11 @@ export const PhenologyScreen = ({ navigation }) => {
     { title: 'December', value: 12 },
   ];
 
+  const phenoPhases = [...new Set(phenology.map((p) => p.phenophase_name))].map((p) => ({
+    title: p,
+    value: p,
+  }));
+
   return (
     <SafeArea>
       <Selector
@@ -36,19 +41,27 @@ export const PhenologyScreen = ({ navigation }) => {
         action={updateMonth}
         expanded={false}
       />
+      <Selector
+        title={phenoPhases.filter((p) => p.value === phenoPhase)[0].title}
+        items={phenoPhases}
+        action={setPhenoPhase}
+        expanded={false}
+      />
       <ScrollView>
-        {phenology.map((p) => (
-          <Phenophase
-            key={p.genus + p.species + p.month + p.phenophase_name}
-            name={p.genus + ' ' + p.species}
-            description={p.common_name + '\n' + p.phenophase_name}
-            onPress={() => {
-              updateSelection(p.genus, p.species);
-              updateLocationSelection(p.genus, p.species);
-              navigation.navigate('Find');
-            }}
-          ></Phenophase>
-        ))}
+        {phenology
+          .filter((p) => p.phenophase_name === phenoPhase)
+          .map((p) => (
+            <Phenophase
+              key={p.genus + p.species + p.month + p.phenophase_name}
+              name={p.genus + ' ' + p.species}
+              description={p.common_name + '\n' + p.phenophase_name}
+              onPress={() => {
+                updateSelection(p.genus, p.species);
+                updateLocationSelection(p.genus, p.species);
+                navigation.navigate('Find');
+              }}
+            ></Phenophase>
+          ))}
       </ScrollView>
     </SafeArea>
   );
