@@ -36,19 +36,19 @@ export const PhenologyScreen = ({ navigation }) => {
 
   return (
     <SafeArea>
-      <Selector
-        title={MONTHS.filter((m) => m.value === month)[0].title}
-        items={MONTHS}
-        action={updateMonth}
-        expanded={false}
-      />
-      <Selector
-        title={phenoPhases.filter((p) => p.value === phenoPhase)[0].title}
-        items={phenoPhases}
-        action={setPhenoPhase}
-        expanded={false}
-      />
       <ScrollView>
+        <Selector
+          title={MONTHS.filter((m) => m.value === month)[0].title}
+          items={MONTHS}
+          action={updateMonth}
+          expanded={false}
+        />
+        <Selector
+          title={phenoPhases.filter((p) => p.value === phenoPhase)[0].title}
+          items={phenoPhases}
+          action={setPhenoPhase}
+          expanded={false}
+        />
         {phenology
           .filter((p) => p.phenophase_name === phenoPhase)
           .map((p) => (
