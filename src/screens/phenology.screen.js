@@ -7,6 +7,7 @@ import { Selector } from '../components/selector.components';
 import { Phenophase } from '../components/phenology.components';
 import { InfoContext } from '../context/info.context';
 import { LocationContext } from '../context/location.context';
+import { CreditsContainer, Credits } from '../components/credits.components';
 
 export const PhenologyScreen = ({ navigation }) => {
   const { phenology, month, updateMonth, phenoPhase, setPhenoPhase } = useContext(PhenologyContext);
@@ -63,6 +64,9 @@ export const PhenologyScreen = ({ navigation }) => {
             ></Phenophase>
           ))}
       </ScrollView>
+      <CreditsContainer>
+        <Credits>Credit: USANPN.org</Credits>
+      </CreditsContainer>
     </SafeArea>
   );
 };

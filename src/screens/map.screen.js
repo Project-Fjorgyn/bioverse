@@ -3,8 +3,9 @@ import MapView from 'react-native-maps';
 import styled from 'styled-components/native';
 
 import { GridCell } from '../components/polygon.components';
-
 import { LocationContext } from '../context/location.context';
+import { CreditsContainer, Credits } from '../components/credits.components';
+import { SafeArea } from '../components/containers.components';
 
 const Map = styled(MapView)`
   height: 100%;
@@ -27,18 +28,8 @@ export function MapScreen({ navigation }) {
     }, 500);
   };
 
-  const callAPI = () => {
-    fetch('http://127.0.0.1:5000/location?hex_id=89054b6a687ffff&genus=ulmus&species=americanus')
-      .then((data) => {
-        return data.json();
-      })
-      .then((e) => {
-        console.log(e);
-      });
-  };
-
   return (
-    <>
+    <SafeArea>
       <Map
         region={{
           latitude: latitude,
@@ -52,6 +43,9 @@ export function MapScreen({ navigation }) {
           <GridCell key={hex_id} hex_id={hex_id} />
         ))}
       </Map>
-    </>
+      <CreditsContainer>
+        <Credits>Credit: GBIF.org https://doi.org/10.15468/dl.274ktm</Credits>
+      </CreditsContainer>
+    </SafeArea>
   );
 }
