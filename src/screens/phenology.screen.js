@@ -8,11 +8,13 @@ import { Phenophase } from '../components/phenology.components';
 import { InfoContext } from '../context/info.context';
 import { LocationContext } from '../context/location.context';
 import { CreditsContainer, Credits } from '../components/credits.components';
+import { MapContext } from '../context/map.context';
 
 export const PhenologyScreen = ({ navigation }) => {
   const { phenology, month, updateMonth, phenoPhase, setPhenoPhase } = useContext(PhenologyContext);
   const { updateSelection } = useContext(InfoContext);
   const { updateLocationSelection } = useContext(LocationContext);
+  const { latitude, longitude, latitudeDelta, longitudeDelta } = useContext(MapContext);
 
   const MONTHS = [
     { title: 'January', value: 1 },
@@ -58,7 +60,14 @@ export const PhenologyScreen = ({ navigation }) => {
               description={p.common_name + '\n' + p.phenophase_name}
               onPress={() => {
                 updateSelection(p.genus, p.species);
-                updateLocationSelection(p.genus, p.species);
+                updateLocationSelection(
+                  p.genus,
+                  p.species,
+                  latitude,
+                  longitude,
+                  latitudeDelta,
+                  longitudeDelta
+                );
                 navigation.navigate('Find');
               }}
             ></Phenophase>

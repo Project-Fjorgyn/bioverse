@@ -6,6 +6,7 @@ import { GridCell } from '../components/polygon.components';
 import { LocationContext } from '../context/location.context';
 import { CreditsContainer, Credits } from '../components/credits.components';
 import { SafeArea } from '../components/containers.components';
+import { MapContext } from '../context/map.context';
 
 const Map = styled(MapView)`
   height: 100%;
@@ -13,12 +14,13 @@ const Map = styled(MapView)`
 `;
 
 export function MapScreen({ navigation }) {
-  const { hexIds, latitude, longitude, latitudeDelta, longitudeDelta, updateRegion } =
-    useContext(LocationContext);
+  const { hexIds, updateRegion } = useContext(LocationContext);
+  const { captureNewRegion } = useContext(MapContext);
 
   var count = 0;
 
   const updateRegionDelay = (region) => {
+    captureNewRegion(region);
     count += 1;
     const last_count = count;
     setTimeout(() => {
@@ -30,15 +32,7 @@ export function MapScreen({ navigation }) {
 
   return (
     <SafeArea>
-      <Map
-        region={{
-          latitude: latitude,
-          longitude: longitude,
-          latitudeDelta: latitudeDelta,
-          longitudeDelta: longitudeDelta,
-        }}
-        onRegionChangeComplete={updateRegionDelay}
-      >
+      <Map onRegionChangeComplete={updateRegionDelay}>
         {hexIds.map((hex_id) => (
           <GridCell key={hex_id} hex_id={hex_id} />
         ))}

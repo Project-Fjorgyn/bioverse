@@ -9,10 +9,6 @@ export function LocationContextProvider({ children }) {
   const [species, setSpecies] = useState('americana');
   const [genus, setGenus] = useState('ulmus');
   const [hexIds, setHexIds] = useState([]);
-  const [latitude, setLatitude] = useState(42.30533947192546);
-  const [longitude, setLongitude] = useState(-72.61722523523223);
-  const [latitudeDelta, setLatitudeDelta] = useState(0.2);
-  const [longitudeDelta, setLongitudeDelta] = useState(0.2);
   const [zoomLevel, setZoomLevel] = useState(5);
 
   const doUpdateRegion = (latitude, longitude, latitudeDelta, longitudeDelta, genus, species) => {
@@ -42,10 +38,6 @@ export function LocationContextProvider({ children }) {
         newHexIds = polyfill([nwCorner, neCorner, seCorner, swCorner, nwCorner], newZoomLevel);
       }
       setZoomLevel(newZoomLevel);
-      setLatitude(latitude);
-      setLongitude(longitude);
-      setLatitudeDelta(latitudeDelta);
-      setLongitudeDelta(longitudeDelta);
       callLocationApi(
         nwCorner,
         neCorner,
@@ -57,15 +49,18 @@ export function LocationContextProvider({ children }) {
         setHexIds
       );
     } else {
-      setLatitude(latitude);
-      setLongitude(longitude);
-      setLatitudeDelta(latitudeDelta);
-      setLongitudeDelta(longitudeDelta);
       setHexIds([]);
     }
   };
 
-  const updateLocationSelection = (genus, species) => {
+  const updateLocationSelection = (
+    genus,
+    species,
+    latitude,
+    longitude,
+    latitudeDelta,
+    longitudeDelta
+  ) => {
     setSpecies(species);
     setGenus(genus);
     doUpdateRegion(latitude, longitude, latitudeDelta, longitudeDelta, genus, species);
@@ -79,10 +74,6 @@ export function LocationContextProvider({ children }) {
     <LocationContext.Provider
       value={{
         hexIds,
-        latitude,
-        longitude,
-        latitudeDelta,
-        longitudeDelta,
         updateRegion,
         updateLocationSelection,
       }}
