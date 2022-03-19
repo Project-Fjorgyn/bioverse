@@ -8,7 +8,6 @@ import { PhenologyContextProvider } from '../context/phenology.context';
 import { InfoContextProvider } from '../context/info.context';
 import { LocationContextProvider } from '../context/location.context';
 import { LearnScreen } from '../screens/learn.screen';
-import { FindScreen } from '../screens/find.screen';
 import { PhenologyScreen } from '../screens/phenology.screen';
 import { MapScreen } from '../screens/map.screen';
 import { MapContextProvider } from '../context/map.context';
