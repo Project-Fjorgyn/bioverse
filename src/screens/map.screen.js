@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import MapView from 'react-native-maps';
 import styled from 'styled-components/native';
+import { ActivityIndicator, Colors } from 'react-native-paper';
 
 import { GridCell } from '../components/polygon.components';
 import { LocationContext } from '../context/location.context';
@@ -8,7 +9,11 @@ import { CreditsContainer, Credits } from '../components/credits.components';
 import { SafeArea } from '../components/containers.components';
 import { MapContext } from '../context/map.context';
 import { SpeciesTitle, Info } from '../components/typography.components';
-import { SpeciesTitleContainer, MapInfoContainer } from '../components/containers.components';
+import {
+  SpeciesTitleContainer,
+  MapInfoContainer,
+  MapActivityContainer,
+} from '../components/containers.components';
 
 const Map = styled(MapView)`
   height: 100%;
@@ -16,7 +21,8 @@ const Map = styled(MapView)`
 `;
 
 export function MapScreen({ navigation }) {
-  const { hexIds, updateRegion, species, genus, needsZoom } = useContext(LocationContext);
+  const { hexIds, updateRegion, species, genus, needsZoom, isLoading } =
+    useContext(LocationContext);
   const { captureNewRegion } = useContext(MapContext);
 
   var count = 0;
@@ -41,6 +47,11 @@ export function MapScreen({ navigation }) {
         <MapInfoContainer>
           <Info>Zoom to See Results</Info>
         </MapInfoContainer>
+      )}
+      {isLoading && (
+        <MapActivityContainer>
+          <ActivityIndicator animating color={Colors.red800} size="large" />
+        </MapActivityContainer>
       )}
       <Map onRegionChangeComplete={updateRegionDelay}>
         {hexIds.map((hex_id) => (

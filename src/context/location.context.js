@@ -11,6 +11,7 @@ export function LocationContextProvider({ children }) {
   const [hexIds, setHexIds] = useState([]);
   const [zoomLevel, setZoomLevel] = useState(5);
   const [needsZoom, setNeedsZoom] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const doUpdateRegion = (latitude, longitude, latitudeDelta, longitudeDelta, genus, species) => {
     if (latitudeDelta < 10) {
@@ -40,6 +41,7 @@ export function LocationContextProvider({ children }) {
       }
       setZoomLevel(newZoomLevel);
       setNeedsZoom(false);
+      setIsLoading(true);
       callLocationApi(
         nwCorner,
         neCorner,
@@ -48,7 +50,8 @@ export function LocationContextProvider({ children }) {
         newZoomLevel,
         genus,
         species,
-        setHexIds
+        setHexIds,
+        setIsLoading
       );
     } else {
       setNeedsZoom(true);
@@ -82,6 +85,7 @@ export function LocationContextProvider({ children }) {
         genus,
         species,
         needsZoom,
+        isLoading,
       }}
     >
       {children}

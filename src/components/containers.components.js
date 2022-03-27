@@ -28,3 +28,14 @@ export const MapInfoContainer = styled(View)`
   align-items: center;
   justify-content: center;
 `;
+
+export const MapActivityContainer = styled(View)`
+  flex-direction: row;
+  position: absolute;
+  bottom: 20%;
+  width: 50%;
+  right: 25%;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+`;
