@@ -9,7 +9,7 @@ export function LocationContextProvider({ children }) {
   const [species, setSpecies] = useState('americana');
   const [genus, setGenus] = useState('ulmus');
   const [hexIds, setHexIds] = useState([]);
-  const [zoomLevel, setZoomLevel] = useState(5);
+  const [zoomLevel, setZoomLevel] = useState(1);
   const [needsZoom, setNeedsZoom] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,6 +38,9 @@ export function LocationContextProvider({ children }) {
       while (newHexIds.length > maxHexes) {
         newZoomLevel = newZoomLevel - 1;
         newHexIds = polyfill([nwCorner, neCorner, seCorner, swCorner, nwCorner], newZoomLevel);
+      }
+      if (newZoomLevel > 8) {
+        newZoomLevel = 8;
       }
       setZoomLevel(newZoomLevel);
       setNeedsZoom(false);
