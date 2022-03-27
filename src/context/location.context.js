@@ -42,8 +42,9 @@ export function LocationContextProvider({ children }) {
       if (newZoomLevel > 8) {
         newZoomLevel = 8;
       }
-      setZoomLevel(newZoomLevel);
-      setNeedsZoom(false);
+      if (needsZoom) {
+        setNeedsZoom(false);
+      }
       setIsLoading(true);
       callLocationApi(
         nwCorner,
@@ -54,10 +55,13 @@ export function LocationContextProvider({ children }) {
         genus,
         species,
         setHexIds,
-        setIsLoading
+        setIsLoading,
+        setZoomLevel
       );
     } else {
-      setNeedsZoom(true);
+      if (!needsZoom) {
+        setNeedsZoom(true);
+      }
       setHexIds([]);
     }
   };

@@ -7,7 +7,8 @@ export function callLocationApi(
   genus,
   species,
   setHexIds,
-  setIsLoading
+  setIsLoading,
+  setZoomLevel
 ) {
   var lat = `${nwCorner[0]},${neCorner[0]},${seCorner[0]},${swCorner[0]},${nwCorner[0]}`;
   var lon = `${nwCorner[1]},${neCorner[1]},${seCorner[1]},${swCorner[1]},${nwCorner[1]}`;
@@ -19,5 +20,6 @@ export function callLocationApi(
     .then((d) => {
       setHexIds(d.map((o) => o['hex_id']));
       setIsLoading(false);
+      setZoomLevel(zoom);
     });
 }

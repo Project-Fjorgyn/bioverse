@@ -25,17 +25,9 @@ export function MapScreen({ navigation }) {
     useContext(LocationContext);
   const { captureNewRegion } = useContext(MapContext);
 
-  var count = 0;
-
-  const updateRegionDelay = (region) => {
+  const updateRegionFull = (region) => {
     captureNewRegion(region);
-    count += 1;
-    const last_count = count;
-    setTimeout(() => {
-      if (count === last_count) {
-        updateRegion(region);
-      }
-    }, 500);
+    updateRegion(region);
   };
 
   return (
@@ -53,7 +45,7 @@ export function MapScreen({ navigation }) {
           <ActivityIndicator animating color={Colors.red800} size="large" />
         </MapActivityContainer>
       )}
-      <Map onRegionChangeComplete={updateRegionDelay}>
+      <Map onRegionChangeComplete={updateRegionFull}>
         {hexIds.map((hex_id) => (
           <GridCell key={hex_id} hex_id={hex_id} />
         ))}
