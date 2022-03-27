@@ -7,7 +7,8 @@ import { LocationContext } from '../context/location.context';
 import { CreditsContainer, Credits } from '../components/credits.components';
 import { SafeArea } from '../components/containers.components';
 import { MapContext } from '../context/map.context';
-import { SpeciesTitle, SpeciesTitleContainer } from '../components/phenology.components';
+import { SpeciesTitle, Info } from '../components/typography.components';
+import { SpeciesTitleContainer, MapInfoContainer } from '../components/containers.components';
 
 const Map = styled(MapView)`
   height: 100%;
@@ -15,7 +16,7 @@ const Map = styled(MapView)`
 `;
 
 export function MapScreen({ navigation }) {
-  const { hexIds, updateRegion, species, genus } = useContext(LocationContext);
+  const { hexIds, updateRegion, species, genus, needsZoom } = useContext(LocationContext);
   const { captureNewRegion } = useContext(MapContext);
 
   var count = 0;
@@ -36,6 +37,11 @@ export function MapScreen({ navigation }) {
       <SpeciesTitleContainer>
         <SpeciesTitle>{`${genus} ${species}`}</SpeciesTitle>
       </SpeciesTitleContainer>
+      {needsZoom && (
+        <MapInfoContainer>
+          <Info>Zoom to See Results</Info>
+        </MapInfoContainer>
+      )}
       <Map onRegionChangeComplete={updateRegionDelay}>
         {hexIds.map((hex_id) => (
           <GridCell key={hex_id} hex_id={hex_id} />

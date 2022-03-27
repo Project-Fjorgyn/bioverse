@@ -10,6 +10,7 @@ export function LocationContextProvider({ children }) {
   const [genus, setGenus] = useState('ulmus');
   const [hexIds, setHexIds] = useState([]);
   const [zoomLevel, setZoomLevel] = useState(5);
+  const [needsZoom, setNeedsZoom] = useState(true);
 
   const doUpdateRegion = (latitude, longitude, latitudeDelta, longitudeDelta, genus, species) => {
     if (latitudeDelta < 10) {
@@ -38,6 +39,7 @@ export function LocationContextProvider({ children }) {
         newHexIds = polyfill([nwCorner, neCorner, seCorner, swCorner, nwCorner], newZoomLevel);
       }
       setZoomLevel(newZoomLevel);
+      setNeedsZoom(false);
       callLocationApi(
         nwCorner,
         neCorner,
@@ -49,6 +51,7 @@ export function LocationContextProvider({ children }) {
         setHexIds
       );
     } else {
+      setNeedsZoom(true);
       setHexIds([]);
     }
   };
@@ -78,6 +81,7 @@ export function LocationContextProvider({ children }) {
         updateLocationSelection,
         genus,
         species,
+        needsZoom,
       }}
     >
       {children}
