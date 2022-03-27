@@ -76,6 +76,8 @@ export function LocationContextProvider({ children }) {
         hexIds,
         updateRegion,
         updateLocationSelection,
+        genus,
+        species,
       }}
     >
       {children}
